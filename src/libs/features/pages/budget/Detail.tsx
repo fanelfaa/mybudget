@@ -24,11 +24,13 @@ export default function BudgetDetailPage() {
 	return (
 		<>
 			<Flex justify="space-between" align="center">
-				<Heading noOfLines={1}>Budget Detail</Heading>
+				<Heading noOfLines={1}>{budgetQuery.data?.name}</Heading>
 				<Button variant="ghost">Tambah</Button>
 			</Flex>
 			<Box h="4" />
-			<Text>Total expenses: {formatIdr(budgetQuery.data?.expenses ?? 0)}</Text>
+			<Text>
+				Total Pengeluaran: {formatIdr(budgetQuery.data?.expenses ?? 0)}
+			</Text>
 			<Box h="2" />
 			<TransactionsProgress
 				amount={budgetQuery.data?.amount ?? 0}

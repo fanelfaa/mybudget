@@ -5,7 +5,6 @@ export type GetBudgetsParams = {
 	month: number;
 	year: number;
 };
-
 export const getBudgets = async (params: GetBudgetsParams) =>
 	supabase
 		.from('budgets')
@@ -28,3 +27,16 @@ export const getBudget = async (id: string) =>
 			if (res.error) throw new Error(res.error.message);
 			return res.data;
 		});
+
+export type PostBudgetParams = {
+	roomId: string;
+	name: string;
+	amount: number;
+	month: number;
+	year: number;
+};
+export const postBudget = async ({
+	roomId,
+	...otherParams
+}: PostBudgetParams) =>
+	supabase.from('budgets').insert({ room_id: roomId, ...otherParams });

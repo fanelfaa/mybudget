@@ -1,8 +1,9 @@
-import { Box, Button, Flex, Heading, VStack } from '@chakra-ui/react';
+import { Box, Flex, Heading, VStack } from '@chakra-ui/react';
 import { Navigate, useParams } from 'react-router-dom';
 import { useGetBudgets } from '@/libs/data-access/hooks/query/useGetBudgets';
 import { getCurrentMonthYear } from '@/libs/utils/getCurrentMonthYear';
 import { BudgetItem } from './components/BudgetItem';
+import { ModalAddBudget } from './components/ModalAddBudget';
 
 export default function BudgetListPage() {
 	const { roomId } = useParams();
@@ -22,7 +23,9 @@ export default function BudgetListPage() {
 		<>
 			<Flex justify="space-between" align="center">
 				<Heading>Budgets</Heading>
-				<Button variant="ghost">Tambah</Button>
+				{roomId ? (
+					<ModalAddBudget roomId={roomId} onSuccess={budgetsQuery.refetch} />
+				) : null}
 			</Flex>
 			<Box h="8" />
 			<VStack align="stretch" gap="2">
