@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { Flex, Heading, Button, VStack, Box, Text } from '@chakra-ui/react';
+import { Flex, Heading, VStack, Box, Text } from '@chakra-ui/react';
 import { useParams } from 'react-router-dom';
 import { useGetBudget } from '@/libs/data-access/hooks/query/useGetBudget';
 import { formatIdr } from '@/libs/utils/formatIdr';
@@ -7,9 +7,10 @@ import { useGetTransactions } from '@/libs/data-access/hooks/query/useGetTransac
 import { getCurrentMonthYear } from '@/libs/utils/getCurrentMonthYear';
 import { TransactionsProgress } from './components/Progress';
 import { TransactionItem } from './components/TransactionItem';
+import { ModalAddExpense } from './components/ModalAddExpense';
 
 export default function BudgetDetailPage() {
-	const { budgetId } = useParams();
+	const { budgetId, roomId } = useParams();
 	const { month, year } = getCurrentMonthYear();
 
 	const budgetQuery = useGetBudget(budgetId!, {
@@ -21,11 +22,25 @@ export default function BudgetDetailPage() {
 		{ enabled: budgetId !== undefined }
 	);
 
+	const currentTotalExpense =
+		transactionsQuery.data?.map((t) => t.amount).reduce((p, c) => p + c, 0) ??
+		0;
+
 	return (
 		<>
 			<Flex justify="space-between" align="center">
 				<Heading noOfLines={1}>{budgetQuery.data?.name}</Heading>
-				<Button variant="ghost">Tambah</Button>
+				{roomId && budgetId ? (
+					<ModalAddExpense
+						roomId={roomId}
+						budgetId={budgetId}
+						onSuccess={() => {
+							budgetQuery.refetch();
+							transactionsQuery.refetch();
+						}}
+						currentTotalExpense={currentTotalExpense}
+					/>
+				) : null}
 			</Flex>
 			<Box h="4" />
 			<Text>

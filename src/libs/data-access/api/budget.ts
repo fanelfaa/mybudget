@@ -40,3 +40,6 @@ export const postBudget = async ({
 	...otherParams
 }: PostBudgetParams) =>
 	supabase.from('budgets').insert({ room_id: roomId, ...otherParams });
+
+export const putTotalExpenseBudget = async (id: string, newExpense: number) =>
+	supabase.from('budgets').update({ expenses: newExpense }).eq('id', id);

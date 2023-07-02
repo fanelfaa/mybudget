@@ -36,20 +36,22 @@ export function ModalAddBudget({ roomId, onSuccess }: ModalAddBudgetProps) {
 			name: '',
 			amount: undefined,
 		},
-		onSubmit: async ({ name, amount }, { setErrors }) => {
+		onSubmit: async ({ name, amount }, { setErrors, resetForm }) => {
 			const monthYear = getCurrentMonthYear();
-			return postBudget({ roomId, name, amount: amount ?? 0, ...monthYear })
-				.then((res) => {
-					if (res.error) {
-						setErrors({ name: res.error.message, amount: res.error.message });
-						return;
-					}
-					onSuccess();
-					onClose();
-				})
-				.catch((e) => {
-					setErrors({ name: e.toString(), amount: e.toString() });
-				});
+			return postBudget({
+				roomId,
+				name,
+				amount: amount ?? 0,
+				...monthYear,
+			}).then((res) => {
+				if (res.error) {
+					setErrors({ name: res.error.message, amount: res.error.message });
+					return;
+				}
+				onSuccess();
+				onClose();
+				resetForm();
+			});
 		},
 		validationSchema: AddBudgetValidationSchema,
 	});
@@ -111,7 +113,12 @@ export function ModalAddBudget({ roomId, onSuccess }: ModalAddBudgetProps) {
 						<Button mr={3} onClick={closeModal}>
 							Batal
 						</Button>
-						<PrimaryButton onClick={onClickSubmit}>Simpan</PrimaryButton>
+						<PrimaryButton
+							onClick={onClickSubmit}
+							isDisabled={formik.isSubmitting}
+						>
+							Simpan
+						</PrimaryButton>
 					</ModalFooter>
 				</ModalContent>
 			</Modal>
