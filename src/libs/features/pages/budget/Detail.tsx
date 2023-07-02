@@ -48,9 +48,12 @@ export default function BudgetDetailPage() {
 			{isTransactionNotEmpty ? (
 				<>
 					<Box h="4" />
-					<Text>
-						Total Pengeluaran: {formatIdr(budgetQuery.data?.expenses ?? 0)}
-					</Text>
+					<Flex justify="space-between">
+						<Text>Budget: {formatIdr(budgetQuery.data?.amount ?? 0)}</Text>
+						<Text>
+							Pengeluaran: {formatIdr(budgetQuery.data?.expenses ?? 0)}
+						</Text>
+					</Flex>
 					<Box h="2" />
 					<TransactionsProgress
 						amount={budgetQuery.data?.amount ?? 0}
