@@ -1,4 +1,4 @@
-import { Box, Flex, Heading, VStack } from '@chakra-ui/react';
+import { Box, Flex, Heading, VStack, Text } from '@chakra-ui/react';
 import { Navigate, useParams } from 'react-router-dom';
 import { useGetBudgets } from '@/libs/data-access/hooks/query/useGetBudgets';
 import { getCurrentMonthYear } from '@/libs/utils/getCurrentMonthYear';
@@ -29,15 +29,21 @@ export default function BudgetListPage() {
 			</Flex>
 			<Box h="8" />
 			<VStack align="stretch" gap="2">
-				{budgetsQuery.data?.map((budget) => (
-					<BudgetItem
-						key={budget.id}
-						id={budget.id}
-						name={budget.name}
-						amount={budget.amount}
-						expense={budget.expenses}
-					/>
-				))}
+				{budgetsQuery.data && budgetsQuery.data.length > 0 ? (
+					budgetsQuery.data.map((budget) => (
+						<BudgetItem
+							key={budget.id}
+							id={budget.id}
+							name={budget.name}
+							amount={budget.amount}
+							expense={budget.expenses}
+						/>
+					))
+				) : (
+					<Flex alignItems="center" justify="center" height="50vh">
+						<Text>Belum Ada Budget</Text>
+					</Flex>
+				)}
 			</VStack>
 		</>
 	);

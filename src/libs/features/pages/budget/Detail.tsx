@@ -26,6 +26,9 @@ export default function BudgetDetailPage() {
 		transactionsQuery.data?.map((t) => t.amount).reduce((p, c) => p + c, 0) ??
 		0;
 
+	const isTransactionNotEmpty =
+		transactionsQuery.data && transactionsQuery.data.length > 0;
+
 	return (
 		<>
 			<Flex justify="space-between" align="center">
@@ -42,25 +45,35 @@ export default function BudgetDetailPage() {
 					/>
 				) : null}
 			</Flex>
-			<Box h="4" />
-			<Text>
-				Total Pengeluaran: {formatIdr(budgetQuery.data?.expenses ?? 0)}
-			</Text>
-			<Box h="2" />
-			<TransactionsProgress
-				amount={budgetQuery.data?.amount ?? 0}
-				expense={budgetQuery.data?.expenses ?? 0}
-			/>
+			{isTransactionNotEmpty ? (
+				<>
+					<Box h="4" />
+					<Text>
+						Total Pengeluaran: {formatIdr(budgetQuery.data?.expenses ?? 0)}
+					</Text>
+					<Box h="2" />
+					<TransactionsProgress
+						amount={budgetQuery.data?.amount ?? 0}
+						expense={budgetQuery.data?.expenses ?? 0}
+					/>
+				</>
+			) : null}
 			<Box h="8" />
 			<VStack align="stretch" gap="2">
-				{transactionsQuery.data?.map((t) => (
-					<TransactionItem
-						key={t.id}
-						id={t.id}
-						note={t.note}
-						amount={t.amount}
-					/>
-				))}
+				{isTransactionNotEmpty ? (
+					transactionsQuery.data.map((t) => (
+						<TransactionItem
+							key={t.id}
+							id={t.id}
+							note={t.note}
+							amount={t.amount}
+						/>
+					))
+				) : (
+					<Flex alignItems="center" justify="center" height="50vh">
+						<Text>Belum Ada Pengeluaran</Text>
+					</Flex>
+				)}
 			</VStack>
 		</>
 	);
