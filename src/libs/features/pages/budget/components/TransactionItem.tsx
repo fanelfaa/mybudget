@@ -119,7 +119,7 @@ export const TransactionItem = (props: TransactionItemProps) => {
 				<AlertDialogOverlay>
 					<AlertDialogContent>
 						<AlertDialogHeader fontSize="lg" fontWeight="bold">
-							Delete Pengeluaran
+							Hapus Pengeluaran
 						</AlertDialogHeader>
 
 						<AlertDialogBody>Yakin? Data akan hilang.</AlertDialogBody>

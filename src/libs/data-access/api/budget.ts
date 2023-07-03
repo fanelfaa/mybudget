@@ -43,3 +43,6 @@ export const postBudget = async ({
 
 export const putTotalExpenseBudget = async (id: string, newExpense: number) =>
 	supabase.from('budgets').update({ expenses: newExpense }).eq('id', id);
+
+export const deleteBudget = async (id: string) =>
+	supabase.from('budgets').delete().eq('id', id);

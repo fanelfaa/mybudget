@@ -1,4 +1,11 @@
-import { Box, Flex, VStack, Text, useDisclosure } from '@chakra-ui/react';
+import {
+	Box,
+	Flex,
+	VStack,
+	Text,
+	useDisclosure,
+	useToast,
+} from '@chakra-ui/react';
 import { Navigate, useParams } from 'react-router-dom';
 import { useGetBudgets } from '@/libs/data-access/hooks/query/useGetBudgets';
 import { getCurrentMonthYear } from '@/libs/utils/getCurrentMonthYear';
@@ -10,6 +17,7 @@ export default function BudgetListPage() {
 	const { roomId } = useParams();
 
 	const modalAddBudgetDisclosure = useDisclosure();
+	const toast = useToast();
 
 	const { month, year } = getCurrentMonthYear();
 
@@ -18,6 +26,11 @@ export default function BudgetListPage() {
 		{ roomId: roomId!, month, year },
 		{ enabled: roomId !== undefined }
 	);
+
+	const onSuccessDelete = () => {
+		budgetsQuery.refetch();
+		toast({ description: 'Berhasil menghapus data!' });
+	};
 
 	if (!roomId) {
 		return <Navigate to="/room" />;
@@ -41,6 +54,7 @@ export default function BudgetListPage() {
 							name={budget.name}
 							amount={budget.amount}
 							expense={budget.expenses}
+							onSuccessDelete={onSuccessDelete}
 						/>
 					))
 				) : (
