@@ -93,10 +93,13 @@ export default function BudgetDetailPage() {
 							onSuccessDelete={onSuccessDelete}
 							budgetId={budgetId}
 							currentTotalExpense={currentTotalExpense}
+							date={t.date}
+							month={t.month}
+							year={t.year}
 						/>
 					))
 				) : (
-					<Flex alignItems="center" justify="center" height="120vh">
+					<Flex alignItems="center" justify="center" height="50vh">
 						<Text>Belum Ada Pengeluaran</Text>
 					</Flex>
 				)}
