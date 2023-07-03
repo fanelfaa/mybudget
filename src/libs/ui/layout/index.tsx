@@ -6,6 +6,7 @@ export type BaseLayoutProps = BoxProps;
 export const BaseLayout = (props: BaseLayoutProps) => (
 	<Box
 		p="4"
+		pt="0"
 		shadow="md"
 		rounded="md"
 		minH="100vh"

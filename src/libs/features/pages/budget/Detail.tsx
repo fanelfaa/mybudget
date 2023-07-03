@@ -1,6 +1,13 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { Flex, Heading, VStack, Box, Text, useToast } from '@chakra-ui/react';
-import { useParams } from 'react-router-dom';
+import {
+	Flex,
+	VStack,
+	Box,
+	Text,
+	useToast,
+	useDisclosure,
+} from '@chakra-ui/react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useMemo } from 'react';
 import { useGetBudget } from '@/libs/data-access/hooks/query/useGetBudget';
 import { formatIdr } from '@/libs/utils/formatIdr';
@@ -9,10 +16,15 @@ import { getCurrentMonthYear } from '@/libs/utils/getCurrentMonthYear';
 import { TransactionsProgress } from './components/Progress';
 import { TransactionItem } from './components/TransactionItem';
 import { ModalAddExpense } from './components/ModalAddExpense';
+import { AppBar } from '@/libs/ui/layout/AppBar';
 
 export default function BudgetDetailPage() {
 	const { budgetId, roomId } = useParams();
 	const toast = useToast();
+	const navigate = useNavigate();
+
+	const modalAddExpenseDisclosure = useDisclosure();
+
 	const { month, year } = getCurrentMonthYear();
 
 	const budgetQuery = useGetBudget(budgetId!, {
@@ -46,17 +58,13 @@ export default function BudgetDetailPage() {
 
 	return (
 		<>
-			<Flex justify="space-between" align="center">
-				<Heading noOfLines={1}>{budgetQuery.data?.name}</Heading>
-				{roomId && budgetId ? (
-					<ModalAddExpense
-						roomId={roomId}
-						budgetId={budgetId}
-						onSuccess={refetchAll}
-						currentTotalExpense={currentTotalExpense}
-					/>
-				) : null}
-			</Flex>
+			<AppBar
+				title={budgetQuery.data?.name}
+				onBack={() => navigate(`/room/${roomId}/budget`, { replace: true })}
+				rightActions={[
+					{ title: 'Tambah', onClick: modalAddExpenseDisclosure.onOpen },
+				]}
+			/>
 			{isTransactionNotEmpty ? (
 				<>
 					<Box h="4" />
@@ -88,11 +96,20 @@ export default function BudgetDetailPage() {
 						/>
 					))
 				) : (
-					<Flex alignItems="center" justify="center" height="50vh">
+					<Flex alignItems="center" justify="center" height="120vh">
 						<Text>Belum Ada Pengeluaran</Text>
 					</Flex>
 				)}
 			</VStack>
+			{roomId && budgetId ? (
+				<ModalAddExpense
+					roomId={roomId}
+					budgetId={budgetId}
+					onSuccess={refetchAll}
+					currentTotalExpense={currentTotalExpense}
+					disclosureProps={modalAddExpenseDisclosure}
+				/>
+			) : null}
 		</>
 	);
 }

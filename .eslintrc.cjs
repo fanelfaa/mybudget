@@ -28,5 +28,6 @@ module.exports = {
 		'import/extensions': 'off',
 		'prefer-destructuring': 'off',
 		'no-shadow': 'off',
+		'no-mixed-spaces-and-tabs': 'off',
 	},
 };
