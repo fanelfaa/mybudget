@@ -1,19 +1,18 @@
-import { Box, Button, Flex, Heading, VStack } from '@chakra-ui/react';
+import { Box, Button, VStack } from '@chakra-ui/react';
 import { Link } from 'react-router-dom';
 import { logout } from '@/libs/data-access/api/logout';
 import { useGetRooms } from '@/libs/data-access/hooks/query/useGetRooms';
+import { AppBar } from '@/libs/ui/layout/AppBar';
 
 const RoomPage = () => {
 	const roomsQuery = useGetRooms();
 
 	return (
 		<>
-			<Flex justify="space-between" align="center">
-				<Heading>Select Room</Heading>
-				<Button variant="ghost" onClick={() => logout()}>
-					Logout
-				</Button>
-			</Flex>
+			<AppBar
+				title="Pilih Room"
+				rightActions={[{ title: 'Logout', onClick: logout }]}
+			/>
 			<Box h="8" />
 			<VStack align="stretch" gap="2">
 				{roomsQuery.data?.map((room) => (
