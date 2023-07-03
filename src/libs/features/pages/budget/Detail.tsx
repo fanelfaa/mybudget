@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { Flex, Heading, VStack, Box, Text } from '@chakra-ui/react';
+import { Flex, Heading, VStack, Box, Text, useToast } from '@chakra-ui/react';
 import { useParams } from 'react-router-dom';
+import { useMemo } from 'react';
 import { useGetBudget } from '@/libs/data-access/hooks/query/useGetBudget';
 import { formatIdr } from '@/libs/utils/formatIdr';
 import { useGetTransactions } from '@/libs/data-access/hooks/query/useGetTransactions';
@@ -11,6 +12,7 @@ import { ModalAddExpense } from './components/ModalAddExpense';
 
 export default function BudgetDetailPage() {
 	const { budgetId, roomId } = useParams();
+	const toast = useToast();
 	const { month, year } = getCurrentMonthYear();
 
 	const budgetQuery = useGetBudget(budgetId!, {
@@ -22,9 +24,22 @@ export default function BudgetDetailPage() {
 		{ enabled: budgetId !== undefined }
 	);
 
-	const currentTotalExpense =
-		transactionsQuery.data?.map((t) => t.amount).reduce((p, c) => p + c, 0) ??
-		0;
+	const refetchAll = () => {
+		budgetQuery.refetch();
+		transactionsQuery.refetch();
+	};
+
+	const currentTotalExpense = useMemo(
+		() =>
+			transactionsQuery.data?.map((t) => t.amount).reduce((p, c) => p + c, 0) ??
+			0,
+		[transactionsQuery.data]
+	);
+
+	const onSuccessDelete = () => {
+		refetchAll();
+		toast({ description: 'Berhasil menghapus data!' });
+	};
 
 	const isTransactionNotEmpty =
 		transactionsQuery.data && transactionsQuery.data.length > 0;
@@ -37,10 +52,7 @@ export default function BudgetDetailPage() {
 					<ModalAddExpense
 						roomId={roomId}
 						budgetId={budgetId}
-						onSuccess={() => {
-							budgetQuery.refetch();
-							transactionsQuery.refetch();
-						}}
+						onSuccess={refetchAll}
 						currentTotalExpense={currentTotalExpense}
 					/>
 				) : null}
@@ -70,6 +82,9 @@ export default function BudgetDetailPage() {
 							id={t.id}
 							note={t.note}
 							amount={t.amount}
+							onSuccessDelete={onSuccessDelete}
+							budgetId={budgetId}
+							currentTotalExpense={currentTotalExpense}
 						/>
 					))
 				) : (

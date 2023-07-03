@@ -9,15 +9,40 @@ import {
 	Text,
 } from '@chakra-ui/react';
 import { FiMoreVertical, FiDelete, FiEdit } from 'react-icons/fi';
+import { useState } from 'react';
 import { formatIdr } from '@/libs/utils/formatIdr';
+import { deleteTransaction } from '@/libs/data-access/api/transaction';
 
 export type TransactionItemProps = {
 	id: string;
+	budgetId?: string;
 	note: string;
 	amount: number;
+	currentTotalExpense: number;
+	onClickEdit?: () => void;
+	onSuccessDelete?: () => void;
 };
 
 export const TransactionItem = (props: TransactionItemProps) => {
+	const [isLoadingDelete, setLoadingDelete] = useState(false);
+
+	const onDelete = () => {
+		if (!props.budgetId) return;
+		setLoadingDelete(true);
+		deleteTransaction({
+			id: props.id,
+			amountDeleted: props.amount,
+			budgetId: props.budgetId,
+			currentBudgetExpense: props.currentTotalExpense,
+		})
+			.then((val) => {
+				if (!val.error) {
+					props.onSuccessDelete?.();
+				}
+			})
+			.finally(() => setLoadingDelete(false));
+	};
+
 	return (
 		<Grid
 			templateRows="auto auto"
@@ -42,10 +67,15 @@ export const TransactionItem = (props: TransactionItemProps) => {
 						aria-label="Options"
 						icon={<FiMoreVertical />}
 						variant="outline"
+						isDisabled={isLoadingDelete}
 					/>
 					<MenuList>
-						<MenuItem icon={<FiEdit />}>Edit</MenuItem>
-						<MenuItem icon={<FiDelete />}>Delete</MenuItem>
+						<MenuItem icon={<FiEdit />} onClick={props.onClickEdit}>
+							Edit
+						</MenuItem>
+						<MenuItem icon={<FiDelete />} onClick={() => onDelete()}>
+							Delete
+						</MenuItem>
 					</MenuList>
 				</Menu>
 			</Grid>
