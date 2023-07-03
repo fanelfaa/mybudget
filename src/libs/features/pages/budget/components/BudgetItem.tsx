@@ -35,7 +35,7 @@ export const BudgetItem = (props: BudgetItemProps) => {
 				rounded: 'md',
 			}}
 		>
-			<Flex justify="space-between" alignItems="center">
+			<Grid templateColumns="1fr auto" alignItems="center">
 				<Heading
 					noOfLines={1}
 					as={Link}
@@ -60,12 +60,18 @@ export const BudgetItem = (props: BudgetItemProps) => {
 						<MenuItem icon={<FiDelete />}>Hapus</MenuItem>
 					</MenuList>
 				</Menu>
-			</Flex>
-			<TransactionsProgress amount={props.amount} expense={props.expense} />
-			<Flex alignItems="center" wrap="wrap">
-				<Text color="gray.600">Budget: {formatIdr(props.amount)}</Text>
+			</Grid>
+			<TransactionsProgress
+				amount={props.amount}
+				expense={props.expense}
+				size="sm"
+			/>
+			<Flex alignItems="center" wrap="wrap" fontSize={14}>
+				<Text color="gray.600">
+					Budget: <strong>{formatIdr(props.amount)}</strong>
+				</Text>
 				<Text color="gray.600" ml="auto">
-					Pengeluaran: {formatIdr(props.expense)}
+					Pengeluaran: <strong>{formatIdr(props.expense)}</strong>
 				</Text>
 			</Flex>
 		</Grid>
