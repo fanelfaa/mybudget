@@ -114,6 +114,7 @@ export const TransactionItem = (props: TransactionItemProps) => {
 				onClose={onClose}
 				closeOnOverlayClick={false}
 				closeOnEsc={false}
+				isCentered
 			>
 				<AlertDialogOverlay>
 					<AlertDialogContent>

@@ -67,7 +67,7 @@ export const AppBar = ({ title, onBack, rightActions }: AppBarProps) => {
 				templateColumns="1fr 3fr 1fr"
 				position="sticky"
 				top="0"
-				bg="whiteAlpha.800"
+				bg="whiteAlpha.700"
 				blur="md"
 				backdropFilter="blur(10px)"
 				alignItems="center"
