@@ -62,13 +62,13 @@ export const TransactionItem = (props: TransactionItemProps) => {
 	return (
 		<>
 			<Grid
-				templateRows="auto auto"
+				templateRows="auto"
 				templateColumns="1fr auto"
 				alignItems="start"
 				gap="4"
+				py="2"
 				borderBottom="1px"
 				borderColor="gray.300"
-				py="2"
 				textTransform="capitalize"
 				transition="all .15s ease-in-out"
 				_hover={{
@@ -122,7 +122,7 @@ export const TransactionItem = (props: TransactionItemProps) => {
 							Delete Pengeluaran
 						</AlertDialogHeader>
 
-						<AlertDialogBody>Yakin? Aksi tidak bisa di-undo.</AlertDialogBody>
+						<AlertDialogBody>Yakin? Data akan hilang.</AlertDialogBody>
 
 						<AlertDialogFooter>
 							<Button
