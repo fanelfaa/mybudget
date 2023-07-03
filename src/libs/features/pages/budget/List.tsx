@@ -1,12 +1,16 @@
-import { Box, Flex, Heading, VStack, Text } from '@chakra-ui/react';
+import { Box, Flex, VStack, Text, useDisclosure } from '@chakra-ui/react';
 import { Navigate, useParams } from 'react-router-dom';
 import { useGetBudgets } from '@/libs/data-access/hooks/query/useGetBudgets';
 import { getCurrentMonthYear } from '@/libs/utils/getCurrentMonthYear';
 import { BudgetItem } from './components/BudgetItem';
 import { ModalAddBudget } from './components/ModalAddBudget';
+import { AppBar } from '@/libs/ui/layout/AppBar';
 
 export default function BudgetListPage() {
 	const { roomId } = useParams();
+
+	const modalAddBudgetDisclosure = useDisclosure();
+
 	const { month, year } = getCurrentMonthYear();
 
 	const budgetsQuery = useGetBudgets(
@@ -21,12 +25,12 @@ export default function BudgetListPage() {
 
 	return (
 		<>
-			<Flex justify="space-between" align="center">
-				<Heading>Budgets</Heading>
-				{roomId ? (
-					<ModalAddBudget roomId={roomId} onSuccess={budgetsQuery.refetch} />
-				) : null}
-			</Flex>
+			<AppBar
+				title="Budgets"
+				rightActions={[
+					{ title: 'Tambah', onClick: modalAddBudgetDisclosure.onOpen },
+				]}
+			/>
 			<Box h="8" />
 			<VStack align="stretch" gap="2">
 				{budgetsQuery.data && budgetsQuery.data.length > 0 ? (
@@ -45,6 +49,13 @@ export default function BudgetListPage() {
 					</Flex>
 				)}
 			</VStack>
+			{roomId ? (
+				<ModalAddBudget
+					roomId={roomId}
+					onSuccess={budgetsQuery.refetch}
+					disclosureProps={modalAddBudgetDisclosure}
+				/>
+			) : null}
 		</>
 	);
 }

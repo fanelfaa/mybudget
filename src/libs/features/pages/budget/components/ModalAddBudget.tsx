@@ -24,10 +24,16 @@ import { PrimaryButton } from '@/libs/ui/button/PrimaryButton';
 export type ModalAddBudgetProps = {
 	roomId: string;
 	onSuccess: () => void;
+
+	disclosureProps: ReturnType<typeof useDisclosure>;
 };
 
-export function ModalAddBudget({ roomId, onSuccess }: ModalAddBudgetProps) {
-	const { isOpen, onOpen, onClose } = useDisclosure();
+export function ModalAddBudget({
+	roomId,
+	onSuccess,
+	disclosureProps,
+}: ModalAddBudgetProps) {
+	// const { isOpen, onOpen, onClose } = useDisclosure();
 
 	const initialRef = React.useRef(null);
 
@@ -49,7 +55,7 @@ export function ModalAddBudget({ roomId, onSuccess }: ModalAddBudgetProps) {
 					return;
 				}
 				onSuccess();
-				onClose();
+				disclosureProps.onClose();
 				resetForm();
 			});
 		},
@@ -58,7 +64,7 @@ export function ModalAddBudget({ roomId, onSuccess }: ModalAddBudgetProps) {
 
 	const closeModal = () => {
 		formik.resetForm();
-		onClose();
+		disclosureProps.onClose();
 	};
 
 	const onClickSubmit = () => {
@@ -66,62 +72,60 @@ export function ModalAddBudget({ roomId, onSuccess }: ModalAddBudgetProps) {
 	};
 
 	return (
-		<>
-			<Button onClick={onOpen} variant="ghost">
-				Tambah
-			</Button>
-
-			<Modal initialFocusRef={initialRef} isOpen={isOpen} onClose={closeModal}>
-				<ModalOverlay />
-				<ModalContent>
-					<ModalHeader>Tambah Budget</ModalHeader>
-					<ModalCloseButton />
-					<ModalBody pb={6}>
-						<VStack spacing={4} align="flex-start">
-							<FormControl
-								isInvalid={!!formik.errors.name && formik.touched.name}
-							>
-								<FormLabel htmlFor="name">Nama</FormLabel>
-								<Input
-									id="name"
-									name="name"
-									variant="filled"
-									onChange={formik.handleChange}
-									value={formik.values.name}
-									ref={initialRef}
-								/>
-								<FormErrorMessage>{formik.errors.name}</FormErrorMessage>
-							</FormControl>
-							<FormControl
-								isInvalid={!!formik.errors.amount && formik.touched.amount}
-							>
-								<FormLabel htmlFor="amount">Amount</FormLabel>
-								<Input
-									id="amount"
-									name="amount"
-									type="number"
-									variant="filled"
-									onChange={formik.handleChange}
-									value={formik.values.amount}
-								/>
-								<FormErrorMessage>{formik.errors.amount}</FormErrorMessage>
-							</FormControl>
-						</VStack>
-					</ModalBody>
-
-					<ModalFooter>
-						<Button mr={3} onClick={closeModal}>
-							Batal
-						</Button>
-						<PrimaryButton
-							onClick={onClickSubmit}
-							isDisabled={formik.isSubmitting}
+		<Modal
+			initialFocusRef={initialRef}
+			isOpen={disclosureProps.isOpen}
+			onClose={closeModal}
+		>
+			<ModalOverlay />
+			<ModalContent>
+				<ModalHeader>Tambah Budget</ModalHeader>
+				<ModalCloseButton />
+				<ModalBody pb={6}>
+					<VStack spacing={4} align="flex-start">
+						<FormControl
+							isInvalid={!!formik.errors.name && formik.touched.name}
 						>
-							Simpan
-						</PrimaryButton>
-					</ModalFooter>
-				</ModalContent>
-			</Modal>
-		</>
+							<FormLabel htmlFor="name">Nama</FormLabel>
+							<Input
+								id="name"
+								name="name"
+								variant="filled"
+								onChange={formik.handleChange}
+								value={formik.values.name}
+								ref={initialRef}
+							/>
+							<FormErrorMessage>{formik.errors.name}</FormErrorMessage>
+						</FormControl>
+						<FormControl
+							isInvalid={!!formik.errors.amount && formik.touched.amount}
+						>
+							<FormLabel htmlFor="amount">Amount</FormLabel>
+							<Input
+								id="amount"
+								name="amount"
+								type="number"
+								variant="filled"
+								onChange={formik.handleChange}
+								value={formik.values.amount}
+							/>
+							<FormErrorMessage>{formik.errors.amount}</FormErrorMessage>
+						</FormControl>
+					</VStack>
+				</ModalBody>
+
+				<ModalFooter>
+					<Button mr={3} onClick={closeModal}>
+						Batal
+					</Button>
+					<PrimaryButton
+						onClick={onClickSubmit}
+						isDisabled={formik.isSubmitting}
+					>
+						Simpan
+					</PrimaryButton>
+				</ModalFooter>
+			</ModalContent>
+		</Modal>
 	);
 }

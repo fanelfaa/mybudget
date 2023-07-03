@@ -102,13 +102,13 @@ export const AppBar = ({ title, onBack, rightActions }: AppBarProps) => {
 				>
 					{title}
 				</Heading>
-				{rightActions && rightActions.length > 0 ? (
-					rightActions.map((action, i) => (
-						<Action key={uniqId + i} {...action} />
-					))
-				) : (
-					<span />
-				)}
+				<HStack justify="flex-end">
+					{rightActions && rightActions.length > 0
+						? rightActions.map((action, i) => (
+								<Action key={uniqId + i} {...action} />
+						  ))
+						: null}
+				</HStack>
 			</Grid>
 			<Heading noOfLines={1}>{title}</Heading>
 		</>

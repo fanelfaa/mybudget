@@ -69,7 +69,6 @@ export const TransactionItem = (props: TransactionItemProps) => {
 				py="2"
 				borderBottom="1px"
 				borderColor="gray.300"
-				textTransform="capitalize"
 				transition="all .15s ease-in-out"
 				_hover={{
 					rounded: 'md',
