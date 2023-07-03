@@ -18,6 +18,8 @@ export const Action = ({ icon, title, onClick }: AppBarAction) => {
 				variant="ghost"
 				colorScheme="blue"
 				size="sm"
+				fontSize={25}
+				bg="transparent!important"
 			/>
 		);
 	}
@@ -28,6 +30,7 @@ export const Action = ({ icon, title, onClick }: AppBarAction) => {
 			variant="ghost"
 			colorScheme="blue"
 			size="sm"
+			bg="transparent!important"
 		>
 			{title}
 		</Button>
@@ -64,10 +67,12 @@ export const AppBar = ({ title, onBack, rightActions }: AppBarProps) => {
 				templateColumns="1fr 3fr 1fr"
 				position="sticky"
 				top="0"
-				bg="Background"
+				bg="whiteAlpha.800"
+				blur="md"
+				backdropFilter="blur(10px)"
 				alignItems="center"
-				borderBottom={showSmallTitle ? '1px solid' : undefined}
-				borderColor={showSmallTitle ? 'gray.200' : undefined}
+				borderBottom="1px solid"
+				borderColor={showSmallTitle ? 'gray.100' : 'transparent'}
 				mx="-4"
 				px="2"
 				h="10"
@@ -84,6 +89,7 @@ export const AppBar = ({ title, onBack, rightActions }: AppBarProps) => {
 							colorScheme="blue"
 							size="sm"
 							fontSize={25}
+							bg="transparent!important"
 						/>
 					) : null}
 				</HStack>
