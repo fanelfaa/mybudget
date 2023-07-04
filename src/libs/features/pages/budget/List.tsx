@@ -91,6 +91,7 @@ export default function BudgetListPage() {
 					onSuccess={() => {
 						budgetsQuery.refetch();
 						toast({ description: 'Berhasil mengubah budget!' });
+						setDataToEdit(null);
 					}}
 					disclosureProps={modalEditBudget}
 					initialValues={dataToEdit}

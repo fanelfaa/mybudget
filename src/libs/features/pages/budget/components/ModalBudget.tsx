@@ -1,5 +1,4 @@
 import {
-	useDisclosure,
 	Button,
 	Modal,
 	ModalOverlay,
@@ -107,7 +106,7 @@ export type ModalEditBudgetProps = {
 	initialValues: FormBudgetValue;
 	onSuccess: () => void;
 
-	disclosureProps: ReturnType<typeof useDisclosure>;
+	disclosureProps: UseDisclosureReturn;
 };
 
 export function ModalEditBudget({
@@ -149,7 +148,7 @@ export type ModalAddBudgetProps = {
 	roomId: string;
 	onSuccess: () => void;
 
-	disclosureProps: ReturnType<typeof useDisclosure>;
+	disclosureProps: UseDisclosureReturn;
 };
 
 export function ModalAddBudget({

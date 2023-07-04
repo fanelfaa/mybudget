@@ -66,3 +66,26 @@ export const deleteTransaction = async (params: DeleteTransactionParams) =>
 				params.currentBudgetExpense - params.amountDeleted
 			);
 		});
+
+export type PutExpenseParams = Omit<PostExpenseParams, 'roomId'> & {
+	id: string;
+	prevAmount: number;
+};
+
+export const putExpense = async ({
+	id,
+	budgetId,
+	currentBudgetExpense,
+	prevAmount,
+	...otherParams
+}: PutExpenseParams) =>
+	supabase
+		.from('transactions')
+		.update(otherParams)
+		.eq('id', id)
+		.then(async () => {
+			return putTotalExpenseBudget(
+				budgetId,
+				currentBudgetExpense - prevAmount + otherParams.amount
+			);
+		});

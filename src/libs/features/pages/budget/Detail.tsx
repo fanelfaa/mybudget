@@ -8,22 +8,29 @@ import {
 	useDisclosure,
 } from '@chakra-ui/react';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
+import format from 'date-fns/format';
 import { useGetBudget } from '@/libs/data-access/hooks/query/useGetBudget';
 import { formatIdr } from '@/libs/utils/formatIdr';
 import { useGetTransactions } from '@/libs/data-access/hooks/query/useGetTransactions';
 import { getCurrentMonthYear } from '@/libs/utils/getCurrentMonthYear';
 import { TransactionsProgress } from './components/Progress';
 import { TransactionItem } from './components/TransactionItem';
-import { ModalAddExpense } from './components/ModalAddExpense';
 import { AppBar } from '@/libs/ui/layout/AppBar';
+import { ModalAddExpense, ModalEditExpense } from './components/ModalExpense';
+import { FormExpenseValue } from './components/type';
 
 export default function BudgetDetailPage() {
+	const [dataToEdit, setDataToEdit] = useState<
+		(FormExpenseValue & { id: string }) | null
+	>(null);
+
 	const { budgetId, roomId } = useParams();
 	const toast = useToast();
 	const navigate = useNavigate();
 
-	const modalAddExpenseDisclosure = useDisclosure();
+	const modalAddExpense = useDisclosure();
+	const modalEditExpense = useDisclosure();
 
 	const { month, year } = getCurrentMonthYear();
 
@@ -61,9 +68,7 @@ export default function BudgetDetailPage() {
 			<AppBar
 				title={budgetQuery.data?.name}
 				onBack={() => navigate(`/room/${roomId}/budget`, { replace: true })}
-				rightActions={[
-					{ title: 'Tambah', onClick: modalAddExpenseDisclosure.onOpen },
-				]}
+				rightActions={[{ title: 'Tambah', onClick: modalAddExpense.onOpen }]}
 			/>
 			{isTransactionNotEmpty ? (
 				<>
@@ -96,6 +101,18 @@ export default function BudgetDetailPage() {
 							date={t.date}
 							month={t.month}
 							year={t.year}
+							onClickEdit={() => {
+								setDataToEdit({
+									id: t.id,
+									note: t.note,
+									amount: t.amount,
+									date: format(
+										new Date(t.year, t.month - 1, t.date),
+										'yyyy-MM-dd'
+									),
+								});
+								modalEditExpense.onOpen();
+							}}
 						/>
 					))
 				) : (
@@ -108,9 +125,26 @@ export default function BudgetDetailPage() {
 				<ModalAddExpense
 					roomId={roomId}
 					budgetId={budgetId}
-					onSuccess={refetchAll}
+					onSuccess={() => {
+						refetchAll();
+						toast({ description: 'Berhasil menambahkan pengeluaran!' });
+					}}
 					currentTotalExpense={currentTotalExpense}
-					disclosureProps={modalAddExpenseDisclosure}
+					disclosureProps={modalAddExpense}
+				/>
+			) : null}
+			{roomId && budgetId && dataToEdit ? (
+				<ModalEditExpense
+					id={dataToEdit?.id}
+					initialValues={dataToEdit}
+					budgetId={budgetId}
+					onSuccess={() => {
+						refetchAll();
+						toast({ description: 'Berhasil mengubah pengeluaran!' });
+						setDataToEdit(null);
+					}}
+					currentTotalExpense={currentTotalExpense}
+					disclosureProps={modalEditExpense}
 				/>
 			) : null}
 		</>
