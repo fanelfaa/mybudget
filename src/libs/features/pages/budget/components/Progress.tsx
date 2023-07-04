@@ -23,7 +23,7 @@ export const TransactionsProgress = (props: TransactionsProgressProps) => {
 	const progressColorScheme = useMemo(() => {
 		if (isMinus) return 'red';
 		if (progresValue < 70) return 'green';
-		if (progresValue < 100) return 'blue';
+		if (progresValue <= 100) return 'blue';
 		return 'red';
 	}, [isMinus, progresValue]);
 

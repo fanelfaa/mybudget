@@ -89,32 +89,34 @@ export default function BudgetDetailPage() {
 			<Box h="8" />
 			<VStack align="stretch" gap="2">
 				{isTransactionNotEmpty ? (
-					transactionsQuery.data.map((t) => (
-						<TransactionItem
-							key={t.id}
-							id={t.id}
-							note={t.note}
-							amount={t.amount}
-							onSuccessDelete={onSuccessDelete}
-							budgetId={budgetId}
-							currentTotalExpense={currentTotalExpense}
-							date={t.date}
-							month={t.month}
-							year={t.year}
-							onClickEdit={() => {
-								setDataToEdit({
-									id: t.id,
-									note: t.note,
-									amount: t.amount,
-									date: format(
-										new Date(t.year, t.month - 1, t.date),
-										'yyyy-MM-dd'
-									),
-								});
-								modalEditExpense.onOpen();
-							}}
-						/>
-					))
+					transactionsQuery.data
+						.sort((a, b) => b.date - a.date)
+						.map((t) => (
+							<TransactionItem
+								key={t.id}
+								id={t.id}
+								note={t.note}
+								amount={t.amount}
+								onSuccessDelete={onSuccessDelete}
+								budgetId={budgetId}
+								currentTotalExpense={currentTotalExpense}
+								date={t.date}
+								month={t.month}
+								year={t.year}
+								onClickEdit={() => {
+									setDataToEdit({
+										id: t.id,
+										note: t.note,
+										amount: t.amount,
+										date: format(
+											new Date(t.year, t.month - 1, t.date),
+											'yyyy-MM-dd'
+										),
+									});
+									modalEditExpense.onOpen();
+								}}
+							/>
+						))
 				) : (
 					<Flex alignItems="center" justify="center" height="50vh">
 						<Text>Belum Ada Pengeluaran</Text>

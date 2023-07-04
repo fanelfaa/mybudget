@@ -7,13 +7,14 @@ import {
 	useToast,
 } from '@chakra-ui/react';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useGetBudgets } from '@/libs/data-access/hooks/query/useGetBudgets';
 import { getCurrentMonthYear } from '@/libs/utils/getCurrentMonthYear';
 import { BudgetItem } from './components/BudgetItem';
 import { AppBar } from '@/libs/ui/layout/AppBar';
 import { ModalAddBudget, ModalEditBudget } from './components/ModalBudget';
 import { FormBudgetValue } from './components/type';
+import { formatIdr } from '@/libs/utils/formatIdr';
 
 export default function BudgetListPage() {
 	const [dataToEdit, setDataToEdit] = useState<
@@ -41,6 +42,11 @@ export default function BudgetListPage() {
 		toast({ description: 'Berhasil menghapus data!' });
 	};
 
+	const totalBudget = useMemo(() => {
+		if (!budgetsQuery.data) return 0;
+		return budgetsQuery.data.reduce((p, c) => p + c.amount, 0);
+	}, [budgetsQuery.data]);
+
 	if (!roomId) {
 		return <Navigate to="/room" />;
 	}
@@ -52,23 +58,29 @@ export default function BudgetListPage() {
 				onBack={() => navigate('/room', { replace: true })}
 				rightActions={[{ title: 'Tambah', onClick: modalAddBudget.onOpen }]}
 			/>
-			<Box h="8" />
-			<VStack align="stretch" gap="2">
+			<Box h="4" />
+			<Text color="gray.600">
+				Total budget: <strong>{formatIdr(totalBudget)}</strong>
+			</Text>
+			<Box h="4" />
+			<VStack align="stretch" gap="2" pb="8">
 				{budgetsQuery.data && budgetsQuery.data.length > 0 ? (
-					budgetsQuery.data.map((budget) => (
-						<BudgetItem
-							key={budget.id}
-							id={budget.id}
-							name={budget.name}
-							amount={budget.amount}
-							expense={budget.expenses}
-							onSuccessDelete={onSuccessDelete}
-							onClickEdit={() => {
-								setDataToEdit(budget);
-								modalEditBudget.onOpen();
-							}}
-						/>
-					))
+					budgetsQuery.data
+						.sort((a, b) => a.name.localeCompare(b.name))
+						.map((budget) => (
+							<BudgetItem
+								key={budget.id}
+								id={budget.id}
+								name={budget.name}
+								amount={budget.amount}
+								expense={budget.expenses}
+								onSuccessDelete={onSuccessDelete}
+								onClickEdit={() => {
+									setDataToEdit(budget);
+									modalEditBudget.onOpen();
+								}}
+							/>
+						))
 				) : (
 					<Flex alignItems="center" justify="center" height="50vh">
 						<Text>Belum Ada Budget</Text>
