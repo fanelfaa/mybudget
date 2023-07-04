@@ -56,9 +56,8 @@ export const BudgetItem = (props: BudgetItemProps) => {
 				templateRows="auto auto auto"
 				gap="2"
 				borderBottom="1px"
-				borderColor="gray.300"
-				pt="1"
-				pb="2"
+				borderColor="gray.100"
+				py="2"
 				transition="all .15s ease-in-out"
 				_hover={{
 					rounded: 'md',

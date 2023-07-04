@@ -66,6 +66,7 @@ export const AppBar = ({ title, onBack, rightActions }: AppBarProps) => {
 			<Grid
 				templateColumns="1fr 3fr 1fr"
 				position="sticky"
+				zIndex="100"
 				top="0"
 				bg="whiteAlpha.700"
 				blur="md"
