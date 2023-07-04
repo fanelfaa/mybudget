@@ -12,13 +12,17 @@ import { useMemo, useState } from 'react';
 import format from 'date-fns/format';
 import { useGetBudget } from '@/libs/data-access/hooks/query/useGetBudget';
 import { formatIdr } from '@/libs/utils/formatIdr';
-import { useGetTransactions } from '@/libs/data-access/hooks/query/useGetTransactions';
+import {
+	ReturnUseGetTransactions,
+	useGetTransactions,
+} from '@/libs/data-access/hooks/query/useGetTransactions';
 import { getCurrentMonthYear } from '@/libs/utils/getCurrentMonthYear';
 import { TransactionsProgress } from './components/Progress';
 import { TransactionItem } from './components/TransactionItem';
 import { AppBar } from '@/libs/ui/layout/AppBar';
 import { ModalAddExpense, ModalEditExpense } from './components/ModalExpense';
 import { FormExpenseValue } from './components/type';
+import { PrimaryButton } from '@/libs/ui/button/PrimaryButton';
 
 export default function BudgetDetailPage() {
 	const [dataToEdit, setDataToEdit] = useState<
@@ -55,6 +59,23 @@ export default function BudgetDetailPage() {
 		[transactionsQuery.data]
 	);
 
+	const groupExpenseDaily = useMemo(() => {
+		if (!transactionsQuery.data) return null;
+		const group = new Map<number, ReturnUseGetTransactions>();
+		transactionsQuery.data
+			.sort((a, b) => b.date - a.date)
+			.forEach((t) => {
+				const date = t.date;
+				const prevGroup = group.get(date);
+				if (!prevGroup) {
+					group.set(date, [t]);
+				} else {
+					group.set(date, [...prevGroup, t]);
+				}
+			});
+		return group;
+	}, [transactionsQuery]);
+
 	const onSuccessDelete = () => {
 		refetchAll();
 		toast({ description: 'Berhasil menghapus data!' });
@@ -87,39 +108,66 @@ export default function BudgetDetailPage() {
 				</>
 			) : null}
 			<Box h="8" />
-			<VStack align="stretch" gap="3" pb="8">
-				{isTransactionNotEmpty ? (
-					transactionsQuery.data
-						.sort((a, b) => b.date - a.date)
-						.map((t) => (
-							<TransactionItem
-								key={t.id}
-								id={t.id}
-								note={t.note}
-								amount={t.amount}
-								onSuccessDelete={onSuccessDelete}
-								budgetId={budgetId}
-								currentTotalExpense={currentTotalExpense}
-								date={t.date}
-								month={t.month}
-								year={t.year}
-								onClickEdit={() => {
-									setDataToEdit({
-										id: t.id,
-										note: t.note,
-										amount: t.amount,
-										date: format(
-											new Date(t.year, t.month - 1, t.date),
-											'yyyy-MM-dd'
-										),
-									});
-									modalEditExpense.onOpen();
-								}}
-							/>
-						))
+			<VStack align="stretch" gap="8" pb="8">
+				{groupExpenseDaily?.size ? (
+					[...groupExpenseDaily.keys()].map((dateKey) => {
+						const data = groupExpenseDaily.get(dateKey)!;
+						const { date, month, year } = data[0];
+						const groupDate = new Date(year, month, date);
+						const stringDate = format(groupDate, 'dd-MM-yyyy');
+						return (
+							<Box key={dateKey}>
+								<Text ml="3" mb="1" fontSize={16} color="gray.600">
+									{stringDate}
+								</Text>
+								<Box
+									background="white"
+									rounded="xl"
+									shadow="xs"
+									overflow="hidden"
+								>
+									{data.map((t) => (
+										<TransactionItem
+											key={t.id}
+											id={t.id}
+											note={t.note}
+											amount={t.amount}
+											onSuccessDelete={onSuccessDelete}
+											budgetId={budgetId}
+											currentTotalExpense={currentTotalExpense}
+											date={t.date}
+											month={t.month}
+											year={t.year}
+											onClickEdit={() => {
+												setDataToEdit({
+													id: t.id,
+													note: t.note,
+													amount: t.amount,
+													date: format(
+														new Date(t.year, t.month - 1, t.date),
+														'yyyy-MM-dd'
+													),
+												});
+												modalEditExpense.onOpen();
+											}}
+										/>
+									))}
+								</Box>
+							</Box>
+						);
+					})
 				) : (
-					<Flex alignItems="center" justify="center" height="50vh">
+					<Flex
+						alignItems="center"
+						justify="center"
+						direction="column"
+						gap="4"
+						height="60vh"
+					>
 						<Text>Belum Ada Pengeluaran</Text>
+						<PrimaryButton onClick={modalAddExpense.onOpen} w="50%">
+							Tambah Baru
+						</PrimaryButton>
 					</Flex>
 				)}
 			</VStack>

@@ -6,7 +6,6 @@ import {
 	AlertDialogHeader,
 	AlertDialogOverlay,
 	Button,
-	Flex,
 	Grid,
 	Heading,
 	IconButton,
@@ -19,7 +18,6 @@ import {
 } from '@chakra-ui/react';
 import { FiMoreVertical, FiDelete, FiEdit } from 'react-icons/fi';
 import React, { useState } from 'react';
-import format from 'date-fns/format';
 import { formatIdr } from '@/libs/utils/formatIdr';
 import { deleteTransaction } from '@/libs/data-access/api/transaction';
 
@@ -64,34 +62,36 @@ export const TransactionItem = (props: TransactionItemProps) => {
 			<Grid
 				templateRows="auto"
 				templateColumns="1fr auto"
-				alignItems="start"
+				alignItems="center"
 				gap="2"
 				px="3"
 				py="2"
 				shadow="xs"
-				rounded="lg"
+				// rounded="lg"
 				bg="white"
 			>
-				<Flex direction="column" gap="2">
-					<Grid alignItems="center" templateColumns="1fr auto" gap="3">
-						<Heading
-							noOfLines={1}
-							as="h4"
-							fontSize={18}
-							color="gray.700"
-							fontWeight="medium"
-						>
-							{props.note}
-						</Heading>
-						<Text color="gray.600">{formatIdr(props.amount)}</Text>
-					</Grid>
-					<Text color="gray.600" fontSize="sm">
+				{/* <Flex direction="column" gap="2"> */}
+				<Grid alignItems="center" templateColumns="1fr auto" gap="3">
+					<Heading
+						noOfLines={1}
+						as="h4"
+						fontSize={18}
+						color="gray.800"
+						fontWeight="medium"
+					>
+						{props.note}
+					</Heading>
+					<Text color="gray.600" fontSize={16}>
+						{formatIdr(props.amount)}
+					</Text>
+				</Grid>
+				{/* <Text color="gray.600" fontSize="sm">
 						{format(
 							new Date(props.year, props.month - 1, props.date),
 							'dd-MM-yyyy'
 						)}
-					</Text>
-				</Flex>
+					</Text> */}
+				{/* </Flex> */}
 
 				<Menu>
 					<MenuButton
@@ -103,7 +103,6 @@ export const TransactionItem = (props: TransactionItemProps) => {
 						size="sm"
 						fontSize={18}
 						mr="-2"
-						mt="-1"
 						color="gray.600"
 					/>
 					<MenuList>
