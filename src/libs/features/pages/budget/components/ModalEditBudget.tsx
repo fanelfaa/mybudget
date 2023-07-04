@@ -17,39 +17,35 @@ import {
 import { useFormik } from 'formik';
 import React from 'react';
 import { AddBudgetValidationSchema } from '@/libs/validations/budget';
-import { postBudget } from '@/libs/data-access/api/budget';
-import { getCurrentMonthYear } from '@/libs/utils/getCurrentMonthYear';
+import { putBudget } from '@/libs/data-access/api/budget';
 import { PrimaryButton } from '@/libs/ui/button/PrimaryButton';
 import { FormBudgetValue } from './type';
 
-export type ModalAddBudgetProps = {
-	roomId: string;
+export type ModalEditBudgetProps = {
+	id: string;
+	initialValues: FormBudgetValue;
 	onSuccess: () => void;
 
 	disclosureProps: ReturnType<typeof useDisclosure>;
 };
 
-export function ModalAddBudget({
-	roomId,
+export function ModalEditBudget({
+	id,
 	onSuccess,
+	initialValues,
 	disclosureProps,
-}: ModalAddBudgetProps) {
+}: ModalEditBudgetProps) {
 	// const { isOpen, onOpen, onClose } = useDisclosure();
 
 	const initialRef = React.useRef(null);
 
 	const formik = useFormik<FormBudgetValue>({
-		initialValues: {
-			name: '',
-			amount: undefined,
-		},
+		initialValues,
 		onSubmit: async ({ name, amount }, { setErrors, resetForm }) => {
-			const monthYear = getCurrentMonthYear();
-			return postBudget({
-				roomId,
+			return putBudget({
+				id,
 				name,
 				amount: amount ?? 0,
-				...monthYear,
 			}).then((res) => {
 				if (res.error) {
 					setErrors({ name: res.error.message, amount: res.error.message });

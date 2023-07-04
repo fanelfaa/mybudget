@@ -102,7 +102,7 @@ export const TransactionItem = (props: TransactionItemProps) => {
 						<MenuItem icon={<FiEdit />} onClick={props.onClickEdit}>
 							Ubah
 						</MenuItem>
-						<MenuItem icon={<FiDelete />} onClick={onOpen}>
+						<MenuItem icon={<FiDelete />} onClick={onOpen} color="red">
 							Hapus
 						</MenuItem>
 					</MenuList>

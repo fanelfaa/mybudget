@@ -35,7 +35,7 @@ export type BudgetItemProps = {
 
 export const BudgetItem = (props: BudgetItemProps) => {
 	const [isLoadingDelete, setLoadingDelete] = useState(false);
-	const { isOpen, onOpen, onClose } = useDisclosure();
+	const alertDialogDelete = useDisclosure();
 	const cancelRef = React.useRef<HTMLButtonElement>(null);
 
 	const onDelete = () => {
@@ -44,7 +44,7 @@ export const BudgetItem = (props: BudgetItemProps) => {
 			.then((val) => {
 				if (!val.error) {
 					props.onSuccessDelete?.();
-					onClose();
+					alertDialogDelete.onClose();
 				}
 			})
 			.finally(() => setLoadingDelete(false));
@@ -84,8 +84,14 @@ export const BudgetItem = (props: BudgetItemProps) => {
 							size="sm"
 						/>
 						<MenuList>
-							<MenuItem icon={<FiEdit />}>Ubah</MenuItem>
-							<MenuItem icon={<FiDelete />} onClick={onOpen}>
+							<MenuItem icon={<FiEdit />} onClick={props.onClickEdit}>
+								Ubah
+							</MenuItem>
+							<MenuItem
+								icon={<FiDelete />}
+								onClick={alertDialogDelete.onOpen}
+								color="red"
+							>
 								Hapus
 							</MenuItem>
 						</MenuList>
@@ -106,9 +112,9 @@ export const BudgetItem = (props: BudgetItemProps) => {
 				</Flex>
 			</Grid>
 			<AlertDialog
-				isOpen={isOpen}
+				isOpen={alertDialogDelete.isOpen}
 				leastDestructiveRef={cancelRef}
-				onClose={onClose}
+				onClose={alertDialogDelete.onClose}
 				closeOnOverlayClick={false}
 				closeOnEsc={false}
 				isCentered
@@ -126,7 +132,7 @@ export const BudgetItem = (props: BudgetItemProps) => {
 						<AlertDialogFooter>
 							<Button
 								ref={cancelRef}
-								onClick={onClose}
+								onClick={alertDialogDelete.onClose}
 								isDisabled={isLoadingDelete}
 							>
 								Batal

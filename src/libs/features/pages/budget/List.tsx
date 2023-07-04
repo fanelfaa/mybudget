@@ -7,17 +7,26 @@ import {
 	useToast,
 } from '@chakra-ui/react';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
+import { useState } from 'react';
 import { useGetBudgets } from '@/libs/data-access/hooks/query/useGetBudgets';
 import { getCurrentMonthYear } from '@/libs/utils/getCurrentMonthYear';
 import { BudgetItem } from './components/BudgetItem';
 import { ModalAddBudget } from './components/ModalAddBudget';
 import { AppBar } from '@/libs/ui/layout/AppBar';
+import { ModalEditBudget } from './components/ModalEditBudget';
+import { FormBudgetValue } from './components/type';
 
 export default function BudgetListPage() {
+	const [dataToEdit, setDataToEdit] = useState<
+		(FormBudgetValue & { id: string }) | null
+	>(null);
+
 	const { roomId } = useParams();
 	const navigate = useNavigate();
 
-	const modalAddBudgetDisclosure = useDisclosure();
+	const modalAddBudget = useDisclosure();
+	const modalEditBudget = useDisclosure();
+
 	const toast = useToast();
 
 	const { month, year } = getCurrentMonthYear();
@@ -42,9 +51,7 @@ export default function BudgetListPage() {
 			<AppBar
 				title="Budgets"
 				onBack={() => navigate('/room', { replace: true })}
-				rightActions={[
-					{ title: 'Tambah', onClick: modalAddBudgetDisclosure.onOpen },
-				]}
+				rightActions={[{ title: 'Tambah', onClick: modalAddBudget.onOpen }]}
 			/>
 			<Box h="8" />
 			<VStack align="stretch" gap="2">
@@ -57,6 +64,10 @@ export default function BudgetListPage() {
 							amount={budget.amount}
 							expense={budget.expenses}
 							onSuccessDelete={onSuccessDelete}
+							onClickEdit={() => {
+								setDataToEdit(budget);
+								modalEditBudget.onOpen();
+							}}
 						/>
 					))
 				) : (
@@ -68,8 +79,22 @@ export default function BudgetListPage() {
 			{roomId ? (
 				<ModalAddBudget
 					roomId={roomId}
-					onSuccess={budgetsQuery.refetch}
-					disclosureProps={modalAddBudgetDisclosure}
+					onSuccess={() => {
+						budgetsQuery.refetch();
+						toast({ description: 'Berhasil menambahkan budget!' });
+					}}
+					disclosureProps={modalAddBudget}
+				/>
+			) : null}
+			{roomId && dataToEdit ? (
+				<ModalEditBudget
+					id={dataToEdit.id}
+					onSuccess={() => {
+						budgetsQuery.refetch();
+						toast({ description: 'Berhasil mengubah budget!' });
+					}}
+					disclosureProps={modalEditBudget}
+					initialValues={dataToEdit}
 				/>
 			) : null}
 		</>

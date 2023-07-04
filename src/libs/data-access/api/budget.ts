@@ -46,3 +46,10 @@ export const putTotalExpenseBudget = async (id: string, newExpense: number) =>
 
 export const deleteBudget = async (id: string) =>
 	supabase.from('budgets').delete().eq('id', id);
+
+export type PutBudgetParams = Pick<PostBudgetParams, 'name' | 'amount'> & {
+	id: string;
+};
+
+export const putBudget = async ({ id, ...otherParams }: PutBudgetParams) =>
+	supabase.from('budgets').update(otherParams).eq('id', id);
