@@ -66,7 +66,7 @@ export const BudgetItem = (props: BudgetItemProps) => {
 						noOfLines={1}
 						as={Link}
 						to={`${props.id}`}
-						size="md"
+						fontSize={18}
 						color="gray.700"
 						fontWeight="medium"
 					>
