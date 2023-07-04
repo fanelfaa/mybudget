@@ -87,7 +87,7 @@ export default function BudgetDetailPage() {
 				</>
 			) : null}
 			<Box h="8" />
-			<VStack align="stretch" gap="2" pb="8">
+			<VStack align="stretch" gap="3" pb="8">
 				{isTransactionNotEmpty ? (
 					transactionsQuery.data
 						.sort((a, b) => b.date - a.date)

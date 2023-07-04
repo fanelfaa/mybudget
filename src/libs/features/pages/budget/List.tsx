@@ -63,7 +63,7 @@ export default function BudgetListPage() {
 				Total budget: <strong>{formatIdr(totalBudget)}</strong>
 			</Text>
 			<Box h="4" />
-			<VStack align="stretch" gap="2" pb="8">
+			<VStack align="stretch" gap="3" pb="8">
 				{budgetsQuery.data && budgetsQuery.data.length > 0 ? (
 					budgetsQuery.data
 						.sort((a, b) => a.name.localeCompare(b.name))

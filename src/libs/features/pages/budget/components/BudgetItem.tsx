@@ -55,13 +55,11 @@ export const BudgetItem = (props: BudgetItemProps) => {
 			<Grid
 				templateRows="auto auto auto"
 				gap="2"
-				borderBottom="1px"
-				borderColor="gray.100"
+				shadow="xs"
+				rounded="lg"
+				bg="white"
+				px="3"
 				py="2"
-				transition="all .15s ease-in-out"
-				_hover={{
-					rounded: 'md',
-				}}
 			>
 				<Grid templateColumns="1fr auto" alignItems="center">
 					<Heading
@@ -70,6 +68,7 @@ export const BudgetItem = (props: BudgetItemProps) => {
 						to={`${props.id}`}
 						size="md"
 						color="gray.700"
+						fontWeight="medium"
 					>
 						{props.name}
 					</Heading>
@@ -78,9 +77,12 @@ export const BudgetItem = (props: BudgetItemProps) => {
 							as={IconButton}
 							aria-label="Options"
 							icon={<FiMoreVertical />}
-							variant="outline"
+							variant="ghost"
 							isDisabled={isLoadingDelete}
 							size="sm"
+							fontSize={18}
+							mr="-2"
+							color="gray.600"
 						/>
 						<MenuList>
 							<MenuItem icon={<FiEdit />} onClick={props.onClickEdit}>
@@ -101,13 +103,9 @@ export const BudgetItem = (props: BudgetItemProps) => {
 					expense={props.expense}
 					size="sm"
 				/>
-				<Flex alignItems="center" wrap="wrap" fontSize={14}>
-					<Text color="gray.600">
-						Budget: <strong>{formatIdr(props.amount)}</strong>
-					</Text>
-					<Text color="gray.600" ml="auto">
-						Pengeluaran: <strong>{formatIdr(props.expense)}</strong>
-					</Text>
+				<Flex alignItems="center" wrap="wrap" fontSize={14} color="gray.600">
+					<Text>Budget: {formatIdr(props.amount)}</Text>
+					<Text ml="auto">Pengeluaran: {formatIdr(props.expense)}</Text>
 				</Flex>
 			</Grid>
 			<AlertDialog

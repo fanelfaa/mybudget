@@ -65,18 +65,22 @@ export const TransactionItem = (props: TransactionItemProps) => {
 				templateRows="auto"
 				templateColumns="1fr auto"
 				alignItems="start"
-				gap="4"
+				gap="2"
+				px="3"
 				py="2"
-				borderBottom="1px"
-				borderColor="gray.100"
-				transition="all .15s ease-in-out"
-				_hover={{
-					rounded: 'md',
-				}}
+				shadow="xs"
+				rounded="lg"
+				bg="white"
 			>
 				<Flex direction="column" gap="2">
 					<Grid alignItems="center" templateColumns="1fr auto" gap="3">
-						<Heading noOfLines={1} as="h4" size="md" color="gray.700">
+						<Heading
+							noOfLines={1}
+							as="h4"
+							size="md"
+							color="gray.700"
+							fontWeight="medium"
+						>
 							{props.note}
 						</Heading>
 						<Text color="gray.600">{formatIdr(props.amount)}</Text>
@@ -94,9 +98,13 @@ export const TransactionItem = (props: TransactionItemProps) => {
 						as={IconButton}
 						aria-label="Options"
 						icon={<FiMoreVertical />}
-						variant="outline"
+						variant="ghost"
 						isDisabled={isLoadingDelete}
 						size="sm"
+						fontSize={18}
+						mr="-2"
+						mt="-1"
+						color="gray.600"
 					/>
 					<MenuList>
 						<MenuItem icon={<FiEdit />} onClick={props.onClickEdit}>
