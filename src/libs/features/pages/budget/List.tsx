@@ -6,7 +6,7 @@ import {
 	useDisclosure,
 	useToast,
 } from '@chakra-ui/react';
-import { Navigate, useParams } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { useGetBudgets } from '@/libs/data-access/hooks/query/useGetBudgets';
 import { getCurrentMonthYear } from '@/libs/utils/getCurrentMonthYear';
 import { BudgetItem } from './components/BudgetItem';
@@ -15,6 +15,7 @@ import { AppBar } from '@/libs/ui/layout/AppBar';
 
 export default function BudgetListPage() {
 	const { roomId } = useParams();
+	const navigate = useNavigate();
 
 	const modalAddBudgetDisclosure = useDisclosure();
 	const toast = useToast();
@@ -40,6 +41,7 @@ export default function BudgetListPage() {
 		<>
 			<AppBar
 				title="Budgets"
+				onBack={() => navigate('/room', { replace: true })}
 				rightActions={[
 					{ title: 'Tambah', onClick: modalAddBudgetDisclosure.onOpen },
 				]}
