@@ -18,7 +18,7 @@ export const Action = ({ icon, title, onClick }: AppBarAction) => {
 				variant="ghost"
 				colorScheme="blue"
 				size="sm"
-				fontSize={25}
+				fontSize={30}
 				bg="transparent!important"
 			/>
 		);
@@ -31,6 +31,8 @@ export const Action = ({ icon, title, onClick }: AppBarAction) => {
 			colorScheme="blue"
 			size="sm"
 			bg="transparent!important"
+			fontSize={18}
+			fontWeight="normal"
 		>
 			{title}
 		</Button>
@@ -50,7 +52,7 @@ export const AppBar = ({ title, onBack, rightActions }: AppBarProps) => {
 
 	const handleScroll = () => {
 		const position = window.scrollY;
-		setShowSmallTitle(position >= 30);
+		setShowSmallTitle(position >= 35);
 	};
 
 	useEffect(() => {
@@ -76,7 +78,7 @@ export const AppBar = ({ title, onBack, rightActions }: AppBarProps) => {
 				borderColor={showSmallTitle ? 'gray.100' : 'transparent'}
 				mx="-4"
 				px="2"
-				h="10"
+				h="12"
 				justifyContent="space-between"
 				transition="all .2s ease-in-out"
 			>
@@ -89,7 +91,7 @@ export const AppBar = ({ title, onBack, rightActions }: AppBarProps) => {
 							onClick={onBack}
 							colorScheme="blue"
 							size="sm"
-							fontSize={25}
+							fontSize={30}
 							bg="transparent!important"
 						/>
 					) : null}
@@ -111,7 +113,15 @@ export const AppBar = ({ title, onBack, rightActions }: AppBarProps) => {
 						: null}
 				</HStack>
 			</Grid>
-			<Heading noOfLines={1}>{title}</Heading>
+			<Heading
+				noOfLines={1}
+				color={!showSmallTitle ? 'black' : 'transparent'}
+				transition="all .2s ease-in-out"
+				size="xl"
+				fontSize={40}
+			>
+				{title}
+			</Heading>
 		</>
 	);
 };
