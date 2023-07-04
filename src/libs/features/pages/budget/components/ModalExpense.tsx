@@ -19,8 +19,10 @@ import {
 	UseDisclosureReturn,
 } from '@chakra-ui/react';
 import { FormikProps, useFormik } from 'formik';
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { format } from 'date-fns';
+import startOfMonth from 'date-fns/startOfMonth';
+import endOfMonth from 'date-fns/endOfMonth';
 import { PrimaryButton } from '@/libs/ui/button/PrimaryButton';
 import { FormExpenseValue } from './type';
 import { postExpense, putExpense } from '@/libs/data-access/api/transaction';
@@ -51,6 +53,17 @@ export function ModalFormExpense({
 	const onClickSubmit = () => {
 		formik.handleSubmit();
 	};
+
+	const { minDate, maxDate } = useMemo(() => {
+		const [year, month, day] = formik.values.date.split('-').map((it) => +it);
+		const selectedDate = new Date(year, month - 1, day);
+		const startDate = startOfMonth(selectedDate);
+		const endDate = endOfMonth(selectedDate);
+		return {
+			minDate: format(startDate, 'yyyy-MM-dd'),
+			maxDate: format(endDate, 'yyyy-MM-dd'),
+		};
+	}, [formik.values.date]);
 
 	return (
 		<Modal initialFocusRef={initialRef} isOpen={isOpen} onClose={closeModal}>
@@ -87,6 +100,8 @@ export function ModalFormExpense({
 								variant="filled"
 								onChange={formik.handleChange}
 								value={formik.values.date}
+								min={minDate}
+								max={maxDate}
 							/>
 							<FormErrorMessage>{formik.errors.date}</FormErrorMessage>
 						</FormControl>
