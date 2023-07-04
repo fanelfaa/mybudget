@@ -6,6 +6,7 @@ import {
 	Text,
 	useToast,
 	useDisclosure,
+	Spinner,
 } from '@chakra-ui/react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useMemo, useState } from 'react';
@@ -164,10 +165,16 @@ export default function BudgetDetailPage() {
 						gap="4"
 						height="60vh"
 					>
-						<Text>Belum Ada Pengeluaran</Text>
-						<PrimaryButton onClick={modalAddExpense.onOpen} w="50%">
-							Tambah Baru
-						</PrimaryButton>
+						{transactionsQuery.isLoading ? (
+							<Spinner />
+						) : (
+							<>
+								<Text>Belum Ada Pengeluaran</Text>
+								<PrimaryButton onClick={modalAddExpense.onOpen} w="50%">
+									Tambah Baru
+								</PrimaryButton>
+							</>
+						)}
 					</Flex>
 				)}
 			</VStack>

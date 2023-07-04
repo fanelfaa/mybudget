@@ -5,6 +5,7 @@ import {
 	Text,
 	useDisclosure,
 	useToast,
+	Spinner,
 } from '@chakra-ui/react';
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { useMemo, useState } from 'react';
@@ -15,6 +16,7 @@ import { AppBar } from '@/libs/ui/layout/AppBar';
 import { ModalAddBudget, ModalEditBudget } from './components/ModalBudget';
 import { FormBudgetValue } from './components/type';
 import { formatIdr } from '@/libs/utils/formatIdr';
+import { PrimaryButton } from '@/libs/ui/button/PrimaryButton';
 
 export default function BudgetListPage() {
 	const [dataToEdit, setDataToEdit] = useState<
@@ -82,8 +84,23 @@ export default function BudgetListPage() {
 							/>
 						))
 				) : (
-					<Flex alignItems="center" justify="center" height="50vh">
-						<Text>Belum Ada Budget</Text>
+					<Flex
+						alignItems="center"
+						justify="center"
+						direction="column"
+						gap="4"
+						height="60vh"
+					>
+						{budgetsQuery.isLoading ? (
+							<Spinner />
+						) : (
+							<>
+								<Text>Belum Ada Pengeluaran</Text>
+								<PrimaryButton onClick={modalAddBudget.onOpen} w="50%">
+									Tambah Baru
+								</PrimaryButton>
+							</>
+						)}
 					</Flex>
 				)}
 			</VStack>
