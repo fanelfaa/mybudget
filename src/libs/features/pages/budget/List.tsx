@@ -11,9 +11,8 @@ import { useState } from 'react';
 import { useGetBudgets } from '@/libs/data-access/hooks/query/useGetBudgets';
 import { getCurrentMonthYear } from '@/libs/utils/getCurrentMonthYear';
 import { BudgetItem } from './components/BudgetItem';
-import { ModalAddBudget } from './components/ModalAddBudget';
 import { AppBar } from '@/libs/ui/layout/AppBar';
-import { ModalEditBudget } from './components/ModalEditBudget';
+import { ModalAddBudget, ModalEditBudget } from './components/ModalBudget';
 import { FormBudgetValue } from './components/type';
 
 export default function BudgetListPage() {
