@@ -10,13 +10,14 @@ import {
 import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { useMemo, useState } from 'react';
 import { useGetBudgets } from '@/libs/data-access/hooks/query/useGetBudgets';
-import { getCurrentMonthYear } from '@/libs/utils/getCurrentMonthYear';
 import { BudgetItem } from './components/BudgetItem';
 import { AppBar } from '@/libs/ui/layout/AppBar';
 import { ModalAddBudget, ModalEditBudget } from './components/ModalBudget';
 import { FormBudgetValue } from './components/type';
 import { formatIdr } from '@/libs/utils/formatIdr';
 import { PrimaryButton } from '@/libs/ui/button/PrimaryButton';
+import { useMonthYear } from '@/libs/data-access/store/monthYearStore';
+import { FilterMonthYear } from './components/FilterMonthYear';
 
 export default function BudgetListPage() {
 	const [dataToEdit, setDataToEdit] = useState<
@@ -31,7 +32,7 @@ export default function BudgetListPage() {
 
 	const toast = useToast();
 
-	const { month, year } = getCurrentMonthYear();
+	const { month, year } = useMonthYear();
 
 	const budgetsQuery = useGetBudgets(
 		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -61,11 +62,13 @@ export default function BudgetListPage() {
 				rightActions={[{ title: 'Tambah', onClick: modalAddBudget.onOpen }]}
 			/>
 			<Box h="4" />
+			<FilterMonthYear />
+			<Box h="8" />
 			<Text color="gray.600">
 				Total budget: <strong>{formatIdr(totalBudget)}</strong>
 			</Text>
 			<Box h="4" />
-			<VStack align="stretch" gap="3" pb="8">
+			<VStack align="stretch" gap="4" pb="8">
 				{budgetsQuery.data && budgetsQuery.data.length > 0 ? (
 					budgetsQuery.data
 						.sort((a, b) => a.name.localeCompare(b.name))
