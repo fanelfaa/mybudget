@@ -117,7 +117,7 @@ export default function BudgetDetailPage() {
 					[...groupExpenseDaily.keys()].map((dateKey) => {
 						const data = groupExpenseDaily.get(dateKey)!;
 						const { date, month, year } = data[0];
-						const groupDate = new Date(year, month, date);
+						const groupDate = new Date(year, month - 1, date);
 						const stringDate = format(groupDate, 'dd-MM-yyyy');
 						return (
 							<Box key={dateKey}>
