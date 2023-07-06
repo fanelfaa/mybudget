@@ -20,7 +20,7 @@ import { AddBudgetValidationSchema } from '@/libs/validations/budget';
 import { postBudget, putBudget } from '@/libs/data-access/api/budget';
 import { PrimaryButton } from '@/libs/ui/button/PrimaryButton';
 import { FormBudgetValue } from './type';
-import { getCurrentMonthYear } from '@/libs/utils/getCurrentMonthYear';
+import { useMonthYear } from '@/libs/data-access/store/monthYearStore';
 
 type ModalFormBudgetProps = {
 	formik: FormikProps<FormBudgetValue>;
@@ -154,13 +154,14 @@ export function ModalAddBudget({
 	onSuccess,
 	disclosureProps,
 }: ModalAddBudgetProps) {
+	const monthYear = useMonthYear();
+
 	const formik = useFormik<FormBudgetValue>({
 		initialValues: {
 			name: '',
 			amount: undefined,
 		},
 		onSubmit: async ({ name, amount }, { setErrors, resetForm }) => {
-			const monthYear = getCurrentMonthYear();
 			return postBudget({
 				roomId,
 				name,

@@ -131,6 +131,7 @@ export const BudgetItem = (props: BudgetItemProps) => {
 								ref={cancelRef}
 								onClick={alertDialogDelete.onClose}
 								isDisabled={isLoadingDelete}
+								variant="solid"
 							>
 								Batal
 							</Button>
