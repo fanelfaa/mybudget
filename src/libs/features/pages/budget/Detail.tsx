@@ -17,13 +17,14 @@ import {
 	ReturnUseGetTransactions,
 	useGetTransactions,
 } from '@/libs/data-access/hooks/query/useGetTransactions';
-import { getCurrentMonthYear } from '@/libs/utils/getCurrentMonthYear';
 import { TransactionsProgress } from './components/Progress';
 import { TransactionItem } from './components/TransactionItem';
 import { AppBar } from '@/libs/ui/layout/AppBar';
 import { ModalAddExpense, ModalEditExpense } from './components/ModalExpense';
 import { FormExpenseValue } from './components/type';
 import { PrimaryButton } from '@/libs/ui/button/PrimaryButton';
+import { FilterMonthYear } from './components/FilterMonthYear';
+import { useMonthYear } from '@/libs/data-access/store/monthYearStore';
 
 export default function BudgetDetailPage() {
 	const [dataToEdit, setDataToEdit] = useState<
@@ -37,7 +38,7 @@ export default function BudgetDetailPage() {
 	const modalAddExpense = useDisclosure();
 	const modalEditExpense = useDisclosure();
 
-	const { month, year } = getCurrentMonthYear();
+	const { month, year } = useMonthYear();
 
 	const budgetQuery = useGetBudget(budgetId!, {
 		enabled: budgetId !== undefined,
@@ -92,9 +93,11 @@ export default function BudgetDetailPage() {
 				onBack={() => navigate(`/room/${roomId}/budget`, { replace: true })}
 				rightActions={[{ title: 'Tambah', onClick: modalAddExpense.onOpen }]}
 			/>
+			<Box h="4" />
+			<FilterMonthYear />
 			{isTransactionNotEmpty ? (
 				<>
-					<Box h="4" />
+					<Box h="8" />
 					<Flex justify="space-between">
 						<Text>Budget: {formatIdr(budgetQuery.data?.amount ?? 0)}</Text>
 						<Text>
