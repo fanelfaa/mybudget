@@ -119,6 +119,7 @@ export const AppBar = ({ title, onBack, rightActions }: AppBarProps) => {
 				transition="all .2s ease-in-out"
 				size="xl"
 				fontSize={40}
+				h="12"
 			>
 				{title}
 			</Heading>
