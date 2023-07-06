@@ -1,11 +1,12 @@
-import { Box, FormLabel, Input } from '@chakra-ui/react';
+import { Box, FormLabel, Grid, IconButton, Input } from '@chakra-ui/react';
+import { FiArrowLeft, FiArrowRight } from 'react-icons/fi';
 import {
 	useMonthYearStore,
 	useGetStringYearMonth,
 } from '@/libs/data-access/store/monthYearStore';
 
 export const FilterMonthYear = () => {
-	const { setValues } = useMonthYearStore();
+	const { setValues, next, prev } = useMonthYearStore();
 	const stringYearMonth = useGetStringYearMonth();
 
 	const onChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
@@ -20,12 +21,26 @@ export const FilterMonthYear = () => {
 	return (
 		<Box>
 			<FormLabel>Pilih Bulan</FormLabel>
-			<Input
-				type="month"
-				defaultValue={stringYearMonth}
-				onChange={onChange}
-				required
-			/>
+			<Grid templateColumns="auto 1fr auto" gap="2" alignItems="center">
+				<IconButton
+					icon={<FiArrowLeft />}
+					aria-label="Previous Month"
+					onClick={prev}
+					fontSize={24}
+				/>
+				<Input
+					type="month"
+					value={stringYearMonth}
+					onChange={onChange}
+					required
+				/>
+				<IconButton
+					icon={<FiArrowRight />}
+					aria-label="Next Month"
+					onClick={next}
+					fontSize={24}
+				/>
+			</Grid>
 		</Box>
 	);
 };

@@ -98,11 +98,7 @@ export const BudgetItem = (props: BudgetItemProps) => {
 						</MenuList>
 					</Menu>
 				</Grid>
-				<TransactionsProgress
-					amount={props.amount}
-					expense={props.expense}
-					size="sm"
-				/>
+				<TransactionsProgress amount={props.amount} expense={props.expense} />
 				<Flex alignItems="center" wrap="wrap" fontSize={14} color="gray.600">
 					<Text>Budget: {formatIdr(props.amount)}</Text>
 					<Text ml="auto">Pengeluaran: {formatIdr(props.expense)}</Text>

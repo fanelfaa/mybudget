@@ -1,11 +1,10 @@
-import { Progress, ProgressProps } from '@chakra-ui/react';
+import { Progress } from '@chakra-ui/react';
 import Decimal from 'decimal.js';
 import { useMemo } from 'react';
 
 export type TransactionsProgressProps = {
 	amount: number;
 	expense: number;
-	size?: ProgressProps['size'];
 };
 
 export const TransactionsProgress = (props: TransactionsProgressProps) => {
@@ -32,7 +31,7 @@ export const TransactionsProgress = (props: TransactionsProgressProps) => {
 			value={progresValue}
 			colorScheme={progressColorScheme}
 			rounded="base"
-			size={props.size}
+			size="sm"
 		/>
 	);
 };
