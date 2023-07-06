@@ -2,6 +2,7 @@ import { ChakraProvider } from '@chakra-ui/react';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { AppRoutes } from './libs/features/app-routes';
 import { useListenSupabaseSession } from './libs/data-access/hooks/useListenSupabaseSession';
+import { theme } from './libs/ui/theme';
 
 export const queryClient = new QueryClient();
 
@@ -11,7 +12,7 @@ function App() {
 
 	return (
 		<QueryClientProvider client={queryClient}>
-			<ChakraProvider>
+			<ChakraProvider theme={theme}>
 				<AppRoutes />
 			</ChakraProvider>
 		</QueryClientProvider>

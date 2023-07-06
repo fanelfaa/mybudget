@@ -61,7 +61,6 @@ const ModalFormBudget = ({
 							<Input
 								id="name"
 								name="name"
-								variant="filled"
 								onChange={formik.handleChange}
 								value={formik.values.name}
 								ref={initialRef}
@@ -76,7 +75,6 @@ const ModalFormBudget = ({
 								id="amount"
 								name="amount"
 								type="number"
-								variant="filled"
 								onChange={formik.handleChange}
 								value={formik.values.amount}
 							/>

@@ -81,7 +81,6 @@ export function ModalFormExpense({
 								id="amount"
 								name="amount"
 								type="number"
-								variant="filled"
 								onChange={formik.handleChange}
 								value={formik.values.amount}
 								ref={initialRef}
@@ -97,7 +96,6 @@ export function ModalFormExpense({
 								name="date"
 								type="date"
 								required
-								variant="filled"
 								onChange={formik.handleChange}
 								value={formik.values.date}
 								min={minDate}
@@ -112,7 +110,6 @@ export function ModalFormExpense({
 							<Textarea
 								id="note"
 								name="note"
-								variant="filled"
 								placeholder="ex: Beli kuda"
 								onChange={formik.handleChange}
 								value={formik.values.note}

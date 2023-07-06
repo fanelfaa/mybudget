@@ -98,7 +98,7 @@ export const TransactionItem = (props: TransactionItemProps) => {
 						as={IconButton}
 						aria-label="Options"
 						icon={<FiMoreVertical />}
-						variant="ghost"
+						// variant="ghost"
 						isDisabled={isLoadingDelete}
 						size="sm"
 						fontSize={18}
