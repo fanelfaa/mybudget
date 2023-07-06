@@ -93,7 +93,7 @@ export default function BudgetDetailPage() {
 				onBack={() => navigate(`/room/${roomId}/budget`, { replace: true })}
 				rightActions={[{ title: 'Tambah', onClick: modalAddExpense.onOpen }]}
 			/>
-			<Box h="4" />
+			<Box h="8" />
 			<FilterMonthYear />
 			{isTransactionNotEmpty ? (
 				<>

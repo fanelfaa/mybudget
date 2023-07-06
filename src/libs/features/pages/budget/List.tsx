@@ -61,7 +61,7 @@ export default function BudgetListPage() {
 				onBack={() => navigate('/room', { replace: true })}
 				rightActions={[{ title: 'Tambah', onClick: modalAddBudget.onOpen }]}
 			/>
-			<Box h="4" />
+			<Box h="8" />
 			<FilterMonthYear />
 			<Box h="8" />
 			<Text color="gray.600">

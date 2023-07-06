@@ -66,8 +66,14 @@ export function ModalFormExpense({
 	}, [formik.values.date]);
 
 	return (
-		<Modal initialFocusRef={initialRef} isOpen={isOpen} onClose={closeModal}>
-			<ModalOverlay />
+		<Modal
+			initialFocusRef={initialRef}
+			isOpen={isOpen}
+			onClose={closeModal}
+			isCentered
+			motionPreset="slideInBottom"
+		>
+			<ModalOverlay backdropFilter="blur(3px)" />
 			<ModalContent>
 				<ModalHeader>{modalTitle}</ModalHeader>
 				<ModalCloseButton />

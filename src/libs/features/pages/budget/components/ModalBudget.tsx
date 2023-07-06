@@ -47,8 +47,10 @@ const ModalFormBudget = ({
 			initialFocusRef={initialRef}
 			isOpen={disclosureProps.isOpen}
 			onClose={closeModal}
+			isCentered
+			motionPreset="slideInBottom"
 		>
-			<ModalOverlay />
+			<ModalOverlay backdropFilter="blur(3px)" />
 			<ModalContent>
 				<ModalHeader>{modalTitle}</ModalHeader>
 				<ModalCloseButton />

@@ -1,4 +1,4 @@
-import { Box, FormLabel, Grid, IconButton, Input } from '@chakra-ui/react';
+import { Grid, IconButton, Input } from '@chakra-ui/react';
 import { FiArrowLeft, FiArrowRight } from 'react-icons/fi';
 import {
 	useMonthYearStore,
@@ -19,37 +19,34 @@ export const FilterMonthYear = () => {
 	};
 
 	return (
-		<Box>
-			<FormLabel>Pilih Bulan</FormLabel>
-			<Grid templateColumns="auto 1fr auto" gap="2" alignItems="center">
-				<IconButton
-					icon={<FiArrowLeft />}
-					aria-label="Previous Month"
-					onClick={prev}
-					fontSize={20}
-					variant="solid"
-					colorScheme="gray"
-					size="sm"
-				/>
-				<Input
-					type="month"
-					value={stringYearMonth}
-					onChange={onChange}
-					variant="filled"
-					required
-					size="sm"
-					rounded="md"
-				/>
-				<IconButton
-					icon={<FiArrowRight />}
-					aria-label="Next Month"
-					onClick={next}
-					fontSize={20}
-					variant="solid"
-					colorScheme="gray"
-					size="sm"
-				/>
-			</Grid>
-		</Box>
+		<Grid templateColumns="auto 1fr auto" gap="2" alignItems="center">
+			<IconButton
+				icon={<FiArrowLeft />}
+				aria-label="Previous Month"
+				onClick={prev}
+				fontSize={20}
+				variant="solid"
+				colorScheme="gray"
+				size="sm"
+			/>
+			<Input
+				type="month"
+				value={stringYearMonth}
+				onChange={onChange}
+				variant="filled"
+				required
+				size="sm"
+				rounded="md"
+			/>
+			<IconButton
+				icon={<FiArrowRight />}
+				aria-label="Next Month"
+				onClick={next}
+				fontSize={20}
+				variant="solid"
+				colorScheme="gray"
+				size="sm"
+			/>
+		</Grid>
 	);
 };
