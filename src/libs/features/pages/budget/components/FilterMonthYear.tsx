@@ -26,19 +26,28 @@ export const FilterMonthYear = () => {
 					icon={<FiArrowLeft />}
 					aria-label="Previous Month"
 					onClick={prev}
-					fontSize={24}
+					fontSize={20}
+					variant="solid"
+					colorScheme="gray"
+					size="sm"
 				/>
 				<Input
 					type="month"
 					value={stringYearMonth}
 					onChange={onChange}
+					variant="filled"
 					required
+					size="sm"
+					rounded="md"
 				/>
 				<IconButton
 					icon={<FiArrowRight />}
 					aria-label="Next Month"
 					onClick={next}
-					fontSize={24}
+					fontSize={20}
+					variant="solid"
+					colorScheme="gray"
+					size="sm"
 				/>
 			</Grid>
 		</Box>
