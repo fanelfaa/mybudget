@@ -62,13 +62,15 @@ export default function BudgetListPage() {
 				onBack={() => navigate('/room', { replace: true })}
 				rightActions={[{ title: 'Tambah', onClick: modalAddBudget.onOpen }]}
 			/>
-			<Box h="8" />
-			<Filter onSearch={setSearchQuery} />
-			<Box h="8" />
-			<Text color="gray.600">
-				Total budget: <strong>{formatIdr(totalBudget)}</strong>
-			</Text>
 			<Box h="4" />
+			<Filter onSearch={setSearchQuery} />
+			<Box h="4" />
+			<Box shadow="xs" rounded="lg" bg="white" px="3" py="2">
+				<Text color="gray.600">
+					Total budget: <strong>{formatIdr(totalBudget)}</strong>
+				</Text>
+			</Box>
+			<Box h="8" />
 			<VStack align="stretch" gap="4" pb="8">
 				{budgetsQuery.data && budgetsQuery.data.length > 0 ? (
 					budgetsQuery.data

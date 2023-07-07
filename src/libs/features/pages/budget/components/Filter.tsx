@@ -23,12 +23,21 @@ export const Filter = ({ onSearch }: SearchProps) => {
 				/>
 			</Grid>
 			<Box
-				pt="4"
+				position="relative"
 				h={show ? '12' : '0'}
-				overflow="hidden"
 				transition="all .2s ease-in-out"
+				transitionDelay=".1s"
 			>
-				<FilterMonthYear />
+				<Box
+					pt="4"
+					h={show ? '12' : '0'}
+					overflow="hidden"
+					transition="all .2s ease-in-out"
+					position="absolute"
+					inset="0"
+				>
+					<FilterMonthYear />
+				</Box>
 			</Box>
 		</Box>
 	);

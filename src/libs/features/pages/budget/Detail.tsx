@@ -98,26 +98,28 @@ export default function BudgetDetailPage() {
 	return (
 		<>
 			<AppBar
-				title={budgetQuery.data?.name ?? location.state.budgetName}
+				title={budgetQuery.data?.name ?? location.state?.budgetName}
 				onBack={() => navigate(`/room/${roomId}/budget`, { replace: true })}
 				rightActions={[{ title: 'Tambah', onClick: modalAddExpense.onOpen }]}
 			/>
-			<Box h="8" />
+			<Box h="4" />
 			<Filter onSearch={setSearchQuery} />
 			{isTransactionNotEmpty ? (
 				<>
-					<Box h="8" />
-					<Flex justify="space-between">
-						<Text>Budget: {formatIdr(budgetQuery.data?.amount ?? 0)}</Text>
-						<Text>
-							Pengeluaran: {formatIdr(budgetQuery.data?.expenses ?? 0)}
-						</Text>
-					</Flex>
-					<Box h="2" />
-					<TransactionsProgress
-						amount={budgetQuery.data?.amount ?? 0}
-						expense={budgetQuery.data?.expenses ?? 0}
-					/>
+					<Box h="4" />
+					<Box shadow="xs" rounded="lg" bg="white" px="3" py="2">
+						<Flex justify="space-between">
+							<Text>Budget: {formatIdr(budgetQuery.data?.amount ?? 0)}</Text>
+							<Text>
+								Pengeluaran: {formatIdr(budgetQuery.data?.expenses ?? 0)}
+							</Text>
+						</Flex>
+						<Box h="2" />
+						<TransactionsProgress
+							amount={budgetQuery.data?.amount ?? 0}
+							expense={budgetQuery.data?.expenses ?? 0}
+						/>
+					</Box>
 				</>
 			) : null}
 			<Box h="8" />
