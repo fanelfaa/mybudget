@@ -23,13 +23,14 @@ import { AppBar } from '@/libs/ui/layout/AppBar';
 import { ModalAddExpense, ModalEditExpense } from './components/ModalExpense';
 import { FormExpenseValue } from './components/type';
 import { PrimaryButton } from '@/libs/ui/button/PrimaryButton';
-import { FilterMonthYear } from './components/FilterMonthYear';
 import { useMonthYear } from '@/libs/data-access/store/monthYearStore';
+import { Filter } from './components/Filter';
 
 export default function BudgetDetailPage() {
 	const [dataToEdit, setDataToEdit] = useState<
 		(FormExpenseValue & { id: string }) | null
 	>(null);
+	const [searchQuery, setSearchQuery] = useState('');
 
 	const { budgetId, roomId } = useParams();
 	const toast = useToast();
@@ -64,19 +65,25 @@ export default function BudgetDetailPage() {
 	const groupExpenseDaily = useMemo(() => {
 		if (!transactionsQuery.data) return null;
 		const group = new Map<number, ReturnUseGetTransactions>();
-		transactionsQuery.data
-			.sort((a, b) => b.date - a.date)
-			.forEach((t) => {
-				const date = t.date;
-				const prevGroup = group.get(date);
-				if (!prevGroup) {
-					group.set(date, [t]);
-				} else {
-					group.set(date, [...prevGroup, t]);
-				}
-			});
+		let filteredData = transactionsQuery.data.sort((a, b) => b.date - a.date);
+
+		if (searchQuery.length > 0) {
+			filteredData = [...filteredData].filter((it) =>
+				it.note.toLowerCase().includes(searchQuery)
+			);
+		}
+
+		filteredData.forEach((t) => {
+			const date = t.date;
+			const prevGroup = group.get(date);
+			if (!prevGroup) {
+				group.set(date, [t]);
+			} else {
+				group.set(date, [...prevGroup, t]);
+			}
+		});
 		return group;
-	}, [transactionsQuery]);
+	}, [transactionsQuery, searchQuery]);
 
 	const onSuccessDelete = () => {
 		refetchAll();
@@ -94,7 +101,7 @@ export default function BudgetDetailPage() {
 				rightActions={[{ title: 'Tambah', onClick: modalAddExpense.onOpen }]}
 			/>
 			<Box h="8" />
-			<FilterMonthYear />
+			<Filter onSearch={setSearchQuery} />
 			{isTransactionNotEmpty ? (
 				<>
 					<Box h="8" />

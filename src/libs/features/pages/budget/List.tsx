@@ -17,12 +17,13 @@ import { FormBudgetValue } from './components/type';
 import { formatIdr } from '@/libs/utils/formatIdr';
 import { PrimaryButton } from '@/libs/ui/button/PrimaryButton';
 import { useMonthYear } from '@/libs/data-access/store/monthYearStore';
-import { FilterMonthYear } from './components/FilterMonthYear';
+import { Filter } from './components/Filter';
 
 export default function BudgetListPage() {
 	const [dataToEdit, setDataToEdit] = useState<
 		(FormBudgetValue & { id: string }) | null
 	>(null);
+	const [searchQuery, setSearchQuery] = useState('');
 
 	const { roomId } = useParams();
 	const navigate = useNavigate();
@@ -62,7 +63,7 @@ export default function BudgetListPage() {
 				rightActions={[{ title: 'Tambah', onClick: modalAddBudget.onOpen }]}
 			/>
 			<Box h="8" />
-			<FilterMonthYear />
+			<Filter onSearch={setSearchQuery} />
 			<Box h="8" />
 			<Text color="gray.600">
 				Total budget: <strong>{formatIdr(totalBudget)}</strong>
@@ -72,6 +73,7 @@ export default function BudgetListPage() {
 				{budgetsQuery.data && budgetsQuery.data.length > 0 ? (
 					budgetsQuery.data
 						.sort((a, b) => a.name.localeCompare(b.name))
+						.filter((it) => it.name.toLowerCase().includes(searchQuery))
 						.map((budget) => (
 							<BudgetItem
 								key={budget.id}

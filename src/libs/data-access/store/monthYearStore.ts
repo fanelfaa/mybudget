@@ -6,20 +6,24 @@ import sub from 'date-fns/sub';
 
 type MonthYearState = {
 	date: Date;
+	show: boolean;
 };
 
 type MonthYearAction = {
 	setValues: (values: Partial<NonNullable<MonthYearState>>) => void;
 	next: () => void;
 	prev: () => void;
+	toggleShow: () => void;
 };
 
 export const useMonthYearStore = create<MonthYearState & MonthYearAction>()(
 	(set, get) => ({
+		show: false,
 		date: new Date(),
 		setValues: (values) => set(() => values),
 		next: () => set({ date: add(get().date, { months: 1 }) }),
 		prev: () => set({ date: sub(get().date, { months: 1 }) }),
+		toggleShow: () => set({ show: !get().show }),
 	})
 );
 

@@ -37,6 +37,7 @@ export const FilterMonthYear = () => {
 				required
 				size="sm"
 				rounded="md"
+				fontSize={16}
 			/>
 			<IconButton
 				icon={<FiArrowRight />}
