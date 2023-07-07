@@ -1,13 +1,13 @@
 import { Box, Grid, IconButton } from '@chakra-ui/react';
 import { FiFilter } from 'react-icons/fi';
+import { useState } from 'react';
 import { FilterMonthYear } from './FilterMonthYear';
 import { Search, SearchProps } from './Search';
-import { useMonthYearStore } from '@/libs/data-access/store/monthYearStore';
 
 export type FilterProps = SearchProps;
 
 export const Filter = ({ onSearch }: SearchProps) => {
-	const { show, toggleShow } = useMonthYearStore();
+	const [show, setShow] = useState(false);
 
 	return (
 		<Box>
@@ -16,7 +16,7 @@ export const Filter = ({ onSearch }: SearchProps) => {
 				<IconButton
 					icon={<FiFilter />}
 					aria-label="Previous Month"
-					onClick={toggleShow}
+					onClick={() => setShow((prev) => !prev)}
 					variant="solid"
 					colorScheme="gray"
 					size="sm"

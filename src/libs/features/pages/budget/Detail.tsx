@@ -24,7 +24,7 @@ import { ModalAddExpense, ModalEditExpense } from './components/ModalExpense';
 import { FormExpenseValue } from './components/type';
 import { PrimaryButton } from '@/libs/ui/button/PrimaryButton';
 import { useMonthYear } from '@/libs/data-access/store/monthYearStore';
-import { Filter } from './components/Filter';
+import { Search } from './components/Search';
 
 export default function BudgetDetailPage() {
 	const [dataToEdit, setDataToEdit] = useState<
@@ -103,7 +103,7 @@ export default function BudgetDetailPage() {
 				rightActions={[{ title: 'Tambah', onClick: modalAddExpense.onOpen }]}
 			/>
 			<Box h="4" />
-			<Filter onSearch={setSearchQuery} />
+			<Search onSearch={setSearchQuery} />
 			{isTransactionNotEmpty ? (
 				<>
 					<Box h="4" />
