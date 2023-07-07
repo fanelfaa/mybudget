@@ -8,7 +8,7 @@ import {
 	useDisclosure,
 	Spinner,
 } from '@chakra-ui/react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { useMemo, useState } from 'react';
 import format from 'date-fns/format';
 import { useGetBudget } from '@/libs/data-access/hooks/query/useGetBudget';
@@ -35,6 +35,8 @@ export default function BudgetDetailPage() {
 	const { budgetId, roomId } = useParams();
 	const toast = useToast();
 	const navigate = useNavigate();
+
+	const location = useLocation();
 
 	const modalAddExpense = useDisclosure();
 	const modalEditExpense = useDisclosure();
@@ -96,7 +98,7 @@ export default function BudgetDetailPage() {
 	return (
 		<>
 			<AppBar
-				title={budgetQuery.data?.name}
+				title={budgetQuery.data?.name ?? location.state.budgetName}
 				onBack={() => navigate(`/room/${roomId}/budget`, { replace: true })}
 				rightActions={[{ title: 'Tambah', onClick: modalAddExpense.onOpen }]}
 			/>
