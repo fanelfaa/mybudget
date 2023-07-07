@@ -16,8 +16,12 @@ import { ModalAddBudget, ModalEditBudget } from './components/ModalBudget';
 import { FormBudgetValue } from './components/type';
 import { formatIdr } from '@/libs/utils/formatIdr';
 import { PrimaryButton } from '@/libs/ui/button/PrimaryButton';
-import { useMonthYear } from '@/libs/data-access/store/monthYearStore';
+import {
+	useMonthYear,
+	useMonthYearStore,
+} from '@/libs/data-access/store/monthYearStore';
 import { Filter } from './components/Filter';
+import { formatDate } from '@/libs/utils/formatDateId';
 
 export default function BudgetListPage() {
 	const [dataToEdit, setDataToEdit] = useState<
@@ -34,6 +38,7 @@ export default function BudgetListPage() {
 	const toast = useToast();
 
 	const { month, year } = useMonthYear();
+	const dateMonthYear = useMonthYearStore((s) => s.date);
 
 	const budgetsQuery = useGetBudgets(
 		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -58,7 +63,7 @@ export default function BudgetListPage() {
 	return (
 		<>
 			<AppBar
-				title="Budgets"
+				title={`Budget ${formatDate(dateMonthYear, 'MMM, yyyy')}`}
 				onBack={() => navigate('/room', { replace: true })}
 				rightActions={[{ title: 'Tambah', onClick: modalAddBudget.onOpen }]}
 			/>

@@ -20,7 +20,11 @@ import { AddBudgetValidationSchema } from '@/libs/validations/budget';
 import { postBudget, putBudget } from '@/libs/data-access/api/budget';
 import { PrimaryButton } from '@/libs/ui/button/PrimaryButton';
 import { FormBudgetValue } from './type';
-import { useMonthYear } from '@/libs/data-access/store/monthYearStore';
+import {
+	useMonthYear,
+	useMonthYearStore,
+} from '@/libs/data-access/store/monthYearStore';
+import { formatDate } from '@/libs/utils/formatDateId';
 
 type ModalFormBudgetProps = {
 	formik: FormikProps<FormBudgetValue>;
@@ -157,6 +161,7 @@ export function ModalAddBudget({
 	disclosureProps,
 }: ModalAddBudgetProps) {
 	const monthYear = useMonthYear();
+	const date = useMonthYearStore((s) => s.date);
 
 	const formik = useFormik<FormBudgetValue>({
 		initialValues: {
@@ -186,7 +191,7 @@ export function ModalAddBudget({
 		<ModalFormBudget
 			disclosureProps={disclosureProps}
 			formik={formik}
-			modalTitle="Tambah Budget"
+			modalTitle={`Tambah Budget untuk ${formatDate(date, 'MMMM, yyyy')}`}
 		/>
 	);
 }
