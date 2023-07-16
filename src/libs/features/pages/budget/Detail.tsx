@@ -18,13 +18,13 @@ import {
 	useGetTransactions,
 } from '@/libs/data-access/hooks/query/useGetTransactions';
 import { TransactionsProgress } from './components/Progress';
-import { TransactionItem } from './components/TransactionItem';
 import { AppBar } from '@/libs/ui/layout/AppBar';
 import { ModalAddExpense, ModalEditExpense } from './components/ModalExpense';
 import { FormExpenseValue } from './components/type';
 import { PrimaryButton } from '@/libs/ui/button/PrimaryButton';
 import { useMonthYear } from '@/libs/data-access/store/monthYearStore';
 import { Search } from './components/Search';
+import { GroupExpenses } from './components/GroupExpenses';
 
 export default function BudgetDetailPage() {
 	const [dataToEdit, setDataToEdit] = useState<
@@ -66,10 +66,7 @@ export default function BudgetDetailPage() {
 
 	const groupExpenseDaily = useMemo(() => {
 		if (!transactionsQuery.data) return null;
-		const group = new Map<
-			number,
-			{ totalExpense: number; transactions: ReturnUseGetTransactions }
-		>();
+		const group = new Map<number, ReturnUseGetTransactions>();
 		let filteredData = transactionsQuery.data.sort((a, b) => b.date - a.date);
 
 		if (searchQuery.length > 0) {
@@ -82,15 +79,9 @@ export default function BudgetDetailPage() {
 			const date = t.date;
 			const prevGroup = group.get(date);
 			if (!prevGroup) {
-				group.set(date, {
-					totalExpense: t.amount,
-					transactions: [t],
-				});
+				group.set(date, [t]);
 			} else {
-				group.set(date, {
-					totalExpense: t.amount + prevGroup.totalExpense,
-					transactions: [...prevGroup.transactions, t],
-				});
+				group.set(date, [...prevGroup, t]);
 			}
 		});
 		return group;
@@ -132,64 +123,29 @@ export default function BudgetDetailPage() {
 				</>
 			) : null}
 			<Box h="8" />
-			<VStack align="stretch" gap="6" pb="8">
+			<VStack align="stretch" gap="10" pb="8">
 				{groupExpenseDaily?.size ? (
 					[...groupExpenseDaily.keys()].map((dateKey) => {
-						const data = groupExpenseDaily.get(dateKey)!;
-						const { transactions, totalExpense } = data;
-						const { date, month, year } = transactions[0];
-						const groupDate = new Date(year, month - 1, date);
-						const stringDate = format(groupDate, 'dd-MM-yyyy');
+						const transactions = groupExpenseDaily.get(dateKey)!;
 						return (
-							<Box key={dateKey}>
-								<Flex justifyContent="space-between" alignItems="center" h="10">
-									<Text ml="3" mb="1" fontSize={16} color="gray.600">
-										{stringDate}
-									</Text>
-									<Text
-										mr="3"
-										mb="1"
-										fontSize={16}
-										color="gray.600"
-										fontWeight="medium"
-									>
-										{formatIdr(totalExpense)}
-									</Text>
-								</Flex>
-								<Box
-									background="white"
-									rounded="xl"
-									shadow="xs"
-									overflow="hidden"
-								>
-									{transactions.map((t) => (
-										<TransactionItem
-											key={t.id}
-											id={t.id}
-											note={t.note}
-											amount={t.amount}
-											onSuccessDelete={onSuccessDelete}
-											budgetId={budgetId}
-											currentTotalExpense={currentTotalExpense}
-											date={t.date}
-											month={t.month}
-											year={t.year}
-											onClickEdit={() => {
-												setDataToEdit({
-													id: t.id,
-													note: t.note,
-													amount: t.amount,
-													date: format(
-														new Date(t.year, t.month - 1, t.date),
-														'yyyy-MM-dd'
-													),
-												});
-												modalEditExpense.onOpen();
-											}}
-										/>
-									))}
-								</Box>
-							</Box>
+							<GroupExpenses
+								transactions={transactions}
+								budgetId={budgetId}
+								currentTotalExpense={currentTotalExpense}
+								onClickEdit={(t) => {
+									setDataToEdit({
+										id: t.id,
+										note: t.note,
+										amount: t.amount,
+										date: format(
+											new Date(t.year, t.month - 1, t.date),
+											'yyyy-MM-dd'
+										),
+									});
+									modalEditExpense.onOpen();
+								}}
+								onSuccessDelete={onSuccessDelete}
+							/>
 						);
 					})
 				) : (
