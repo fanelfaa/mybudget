@@ -70,11 +70,18 @@ export function ModalFormExpense({
 			initialFocusRef={initialRef}
 			isOpen={isOpen}
 			onClose={closeModal}
-			isCentered
 			motionPreset="slideInBottom"
 		>
 			<ModalOverlay backdropFilter="blur(3px)" />
-			<ModalContent>
+			<ModalContent
+				style={{
+					position: 'absolute',
+					bottom: 0,
+					paddingBottom: 20,
+					margin: 0,
+				}}
+				roundedTop="2xl"
+			>
 				<ModalHeader>{modalTitle}</ModalHeader>
 				<ModalCloseButton />
 				<ModalBody pb={6}>
