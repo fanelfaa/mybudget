@@ -52,7 +52,7 @@ export const AppBar = ({ title, onBack, rightActions }: AppBarProps) => {
 
 	const handleScroll = () => {
 		const position = window.scrollY;
-		setShowSmallTitle(position >= 35);
+		setShowSmallTitle(position >= 40);
 	};
 
 	useEffect(() => {
