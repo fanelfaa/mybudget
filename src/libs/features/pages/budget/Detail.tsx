@@ -66,7 +66,10 @@ export default function BudgetDetailPage() {
 
 	const groupExpenseDaily = useMemo(() => {
 		if (!transactionsQuery.data) return null;
-		const group = new Map<number, ReturnUseGetTransactions>();
+		const group = new Map<
+			number,
+			{ totalExpense: number; transactions: ReturnUseGetTransactions }
+		>();
 		let filteredData = transactionsQuery.data.sort((a, b) => b.date - a.date);
 
 		if (searchQuery.length > 0) {
@@ -79,9 +82,15 @@ export default function BudgetDetailPage() {
 			const date = t.date;
 			const prevGroup = group.get(date);
 			if (!prevGroup) {
-				group.set(date, [t]);
+				group.set(date, {
+					totalExpense: t.amount,
+					transactions: [t],
+				});
 			} else {
-				group.set(date, [...prevGroup, t]);
+				group.set(date, {
+					totalExpense: t.amount + prevGroup.totalExpense,
+					transactions: [...prevGroup.transactions, t],
+				});
 			}
 		});
 		return group;
@@ -123,25 +132,37 @@ export default function BudgetDetailPage() {
 				</>
 			) : null}
 			<Box h="8" />
-			<VStack align="stretch" gap="8" pb="8">
+			<VStack align="stretch" gap="6" pb="8">
 				{groupExpenseDaily?.size ? (
 					[...groupExpenseDaily.keys()].map((dateKey) => {
 						const data = groupExpenseDaily.get(dateKey)!;
-						const { date, month, year } = data[0];
+						const { transactions, totalExpense } = data;
+						const { date, month, year } = transactions[0];
 						const groupDate = new Date(year, month - 1, date);
 						const stringDate = format(groupDate, 'dd-MM-yyyy');
 						return (
 							<Box key={dateKey}>
-								<Text ml="3" mb="1" fontSize={16} color="gray.600">
-									{stringDate}
-								</Text>
+								<Flex justifyContent="space-between" alignItems="center" h="10">
+									<Text ml="3" mb="1" fontSize={16} color="gray.600">
+										{stringDate}
+									</Text>
+									<Text
+										mr="3"
+										mb="1"
+										fontSize={16}
+										color="gray.600"
+										fontWeight="medium"
+									>
+										{formatIdr(totalExpense)}
+									</Text>
+								</Flex>
 								<Box
 									background="white"
 									rounded="xl"
 									shadow="xs"
 									overflow="hidden"
 								>
-									{data.map((t) => (
+									{transactions.map((t) => (
 										<TransactionItem
 											key={t.id}
 											id={t.id}
