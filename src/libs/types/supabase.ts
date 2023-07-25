@@ -15,30 +15,30 @@ export interface Database {
 					created_at: string | null;
 					expenses: number;
 					id: string;
-					month: number;
+					month: number | null;
 					name: string;
 					room_id: string;
-					year: number;
+					year: number | null;
 				};
 				Insert: {
 					amount?: number;
 					created_at?: string | null;
 					expenses?: number;
 					id?: string;
-					month: number;
+					month?: number | null;
 					name: string;
 					room_id: string;
-					year: number;
+					year?: number | null;
 				};
 				Update: {
 					amount?: number;
 					created_at?: string | null;
 					expenses?: number;
 					id?: string;
-					month?: number;
+					month?: number | null;
 					name?: string;
 					room_id?: string;
-					year?: number;
+					year?: number | null;
 				};
 				Relationships: [
 					{
@@ -101,7 +101,7 @@ export interface Database {
 			transactions: {
 				Row: {
 					amount: number;
-					budget_id: string;
+					budget_id: string | null;
 					category_id: string | null;
 					created_at: string | null;
 					date: number;
@@ -114,7 +114,7 @@ export interface Database {
 				};
 				Insert: {
 					amount?: number;
-					budget_id: string;
+					budget_id?: string | null;
 					category_id?: string | null;
 					created_at?: string | null;
 					date: number;
@@ -127,7 +127,7 @@ export interface Database {
 				};
 				Update: {
 					amount?: number;
-					budget_id?: string;
+					budget_id?: string | null;
 					category_id?: string | null;
 					created_at?: string | null;
 					date?: number;
