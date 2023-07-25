@@ -167,7 +167,7 @@ export function ModalAddRoom({
 		<ModalFormRoom
 			disclosureProps={disclosureProps}
 			formik={formik}
-			modalTitle={`Tambah Room`}
+			modalTitle={`Tambah Periode`}
 		/>
 	);
 }
