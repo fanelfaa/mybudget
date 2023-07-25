@@ -7,7 +7,12 @@ import {
 	useToast,
 	Spinner,
 } from '@chakra-ui/react';
-import { Navigate, useNavigate, useParams } from 'react-router-dom';
+import {
+	Navigate,
+	useLocation,
+	useNavigate,
+	useParams,
+} from 'react-router-dom';
 import { useMemo, useState } from 'react';
 import { useGetBudgets } from '@/libs/data-access/hooks/query/useGetBudgets';
 import { BudgetItem } from './components/BudgetItem';
@@ -16,12 +21,8 @@ import { ModalAddBudget, ModalEditBudget } from './components/ModalBudget';
 import { FormBudgetValue } from './components/type';
 import { formatIdr } from '@/libs/utils/formatIdr';
 import { PrimaryButton } from '@/libs/ui/button/PrimaryButton';
-import {
-	useMonthYear,
-	useMonthYearStore,
-} from '@/libs/data-access/store/monthYearStore';
-import { Filter } from './components/Filter';
-import { formatDate } from '@/libs/utils/formatDateId';
+import { Search } from './components/Search';
+import { useGetRoom } from '@/libs/data-access/hooks/query/useGetRoom';
 
 export default function BudgetListPage() {
 	const [dataToEdit, setDataToEdit] = useState<
@@ -36,13 +37,16 @@ export default function BudgetListPage() {
 	const modalEditBudget = useDisclosure();
 
 	const toast = useToast();
+	const location = useLocation();
 
-	const { month, year } = useMonthYear();
-	const dateMonthYear = useMonthYearStore((s) => s.date);
+	// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+	const roomQuery = useGetRoom(roomId!, {
+		enabled: roomId !== undefined,
+	});
 
 	const budgetsQuery = useGetBudgets(
 		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-		{ roomId: roomId!, month, year },
+		{ roomId: roomId! },
 		{ enabled: roomId !== undefined }
 	);
 
@@ -60,15 +64,17 @@ export default function BudgetListPage() {
 		return <Navigate to="/room" />;
 	}
 
+	const roomName = roomQuery.data?.rooms?.name || location.state?.roomName;
+
 	return (
 		<>
 			<AppBar
-				title={`Budget ${formatDate(dateMonthYear, 'MMM, yyyy')}`}
+				title={roomName}
 				onBack={() => navigate('/room', { replace: true })}
 				rightActions={[{ title: 'Tambah', onClick: modalAddBudget.onOpen }]}
 			/>
 			<Box h="4" />
-			<Filter onSearch={setSearchQuery} />
+			<Search onSearch={setSearchQuery} />
 			<Box h="4" />
 			<Box shadow="xs" rounded="lg" bg="white" px="3" py="2">
 				<Text color="gray.600">
@@ -124,6 +130,7 @@ export default function BudgetListPage() {
 						toast({ description: 'Berhasil menambahkan budget!' });
 					}}
 					disclosureProps={modalAddBudget}
+					roomName={roomName}
 				/>
 			) : null}
 			{roomId && dataToEdit ? (

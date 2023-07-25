@@ -46,7 +46,12 @@ export type AppBarProps = {
 	rightActions?: AppBarAction[];
 };
 
-export const AppBar = ({ title, onBack, rightActions }: AppBarProps) => {
+export const AppBar = ({
+	title,
+	onBack,
+	rightActions,
+	leftAction,
+}: AppBarProps) => {
 	const [showSmallTitle, setShowSmallTitle] = useState(false);
 	const uniqId = useId();
 
@@ -95,6 +100,7 @@ export const AppBar = ({ title, onBack, rightActions }: AppBarProps) => {
 							bg="transparent!important"
 						/>
 					) : null}
+					{leftAction && !onBack ? <Action {...leftAction} /> : null}
 				</HStack>
 				<Heading
 					size="md"
@@ -119,7 +125,7 @@ export const AppBar = ({ title, onBack, rightActions }: AppBarProps) => {
 				transition="all .2s ease-in-out"
 				size="xl"
 				fontSize={40}
-				h="12"
+				h="14"
 			>
 				{title}
 			</Heading>

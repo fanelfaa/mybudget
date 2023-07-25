@@ -20,11 +20,6 @@ import { AddBudgetValidationSchema } from '@/libs/validations/budget';
 import { postBudget, putBudget } from '@/libs/data-access/api/budget';
 import { PrimaryButton } from '@/libs/ui/button/PrimaryButton';
 import { FormBudgetValue } from './type';
-import {
-	useMonthYear,
-	useMonthYearStore,
-} from '@/libs/data-access/store/monthYearStore';
-import { formatDate } from '@/libs/utils/formatDateId';
 
 type ModalFormBudgetProps = {
 	formik: FormikProps<FormBudgetValue>;
@@ -158,6 +153,7 @@ export function ModalEditBudget({
 
 export type ModalAddBudgetProps = {
 	roomId: string;
+	roomName: string;
 	onSuccess: () => void;
 
 	disclosureProps: UseDisclosureReturn;
@@ -165,12 +161,10 @@ export type ModalAddBudgetProps = {
 
 export function ModalAddBudget({
 	roomId,
+	roomName,
 	onSuccess,
 	disclosureProps,
 }: ModalAddBudgetProps) {
-	const monthYear = useMonthYear();
-	const date = useMonthYearStore((s) => s.date);
-
 	const formik = useFormik<FormBudgetValue>({
 		initialValues: {
 			name: '',
@@ -181,7 +175,6 @@ export function ModalAddBudget({
 				roomId,
 				name,
 				amount: amount ?? 0,
-				...monthYear,
 			}).then((res) => {
 				if (res.error) {
 					setErrors({ name: res.error.message, amount: res.error.message });
@@ -199,7 +192,7 @@ export function ModalAddBudget({
 		<ModalFormBudget
 			disclosureProps={disclosureProps}
 			formik={formik}
-			modalTitle={`Tambah Budget untuk ${formatDate(date, 'MMMM, yyyy')}`}
+			modalTitle={`Tambah Budget untuk ${roomName}`}
 		/>
 	);
 }

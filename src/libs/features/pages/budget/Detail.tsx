@@ -22,7 +22,6 @@ import { AppBar } from '@/libs/ui/layout/AppBar';
 import { ModalAddExpense, ModalEditExpense } from './components/ModalExpense';
 import { FormExpenseValue } from './components/type';
 import { PrimaryButton } from '@/libs/ui/button/PrimaryButton';
-import { useMonthYear } from '@/libs/data-access/store/monthYearStore';
 import { Search } from './components/Search';
 import { GroupExpenses } from './components/GroupExpenses';
 
@@ -41,14 +40,12 @@ export default function BudgetDetailPage() {
 	const modalAddExpense = useDisclosure();
 	const modalEditExpense = useDisclosure();
 
-	const { month, year } = useMonthYear();
-
 	const budgetQuery = useGetBudget(budgetId!, {
 		enabled: budgetId !== undefined,
 	});
 
 	const transactionsQuery = useGetTransactions(
-		{ budgetId: budgetId!, month, year },
+		{ budgetId: budgetId! },
 		{ enabled: budgetId !== undefined }
 	);
 
@@ -129,6 +126,7 @@ export default function BudgetDetailPage() {
 						const transactions = groupExpenseDaily.get(dateKey)!;
 						return (
 							<GroupExpenses
+								key={dateKey}
 								transactions={transactions}
 								budgetId={budgetId}
 								currentTotalExpense={currentTotalExpense}
