@@ -64,7 +64,16 @@ export default function BudgetDetailPage() {
 	const groupExpenseDaily = useMemo(() => {
 		if (!transactionsQuery.data) return null;
 		const group = new Map<number, ReturnUseGetTransactions>();
-		let filteredData = transactionsQuery.data.sort((a, b) => b.date - a.date);
+
+		const getSortableDate = (date: number, month: number, year: number) => {
+			return year + month * 100 + date;
+		};
+
+		let filteredData = transactionsQuery.data.sort(
+			(a, b) =>
+				getSortableDate(b.date, b.month, b.year) -
+				getSortableDate(a.date, a.month, a.year)
+		);
 
 		if (searchQuery.length > 0) {
 			filteredData = [...filteredData].filter((it) =>
