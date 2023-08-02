@@ -125,6 +125,16 @@ export default function BudgetDetailPage() {
 							amount={budgetQuery.data?.amount ?? 0}
 							expense={budgetQuery.data?.expenses ?? 0}
 						/>
+						<Box h="2" />
+						<Flex justify="flex-end">
+							<Text>
+								Sisa:{' '}
+								{formatIdr(
+									(budgetQuery.data?.amount ?? 0) -
+										(budgetQuery.data?.expenses ?? 0)
+								)}
+							</Text>
+						</Flex>
 					</Box>
 				</>
 			) : null}
