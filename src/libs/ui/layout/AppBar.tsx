@@ -1,14 +1,15 @@
 import { Button, Grid, HStack, Heading, IconButton } from '@chakra-ui/react';
-import { ReactElement, useEffect, useId, useState } from 'react';
+import { CSSProperties, ReactElement, useEffect, useId, useState } from 'react';
 import { FiChevronLeft } from 'react-icons/fi';
 
 export type AppBarAction = {
 	title?: string;
 	icon?: ReactElement;
+	style?: CSSProperties;
 	onClick?: () => void;
 };
 
-export const Action = ({ icon, title, onClick }: AppBarAction) => {
+export const Action = ({ icon, title, style, onClick }: AppBarAction) => {
 	if (icon && !title) {
 		return (
 			<IconButton
@@ -20,6 +21,7 @@ export const Action = ({ icon, title, onClick }: AppBarAction) => {
 				size="sm"
 				fontSize={30}
 				bg="transparent!important"
+				style={style}
 			/>
 		);
 	}
@@ -33,6 +35,7 @@ export const Action = ({ icon, title, onClick }: AppBarAction) => {
 			bg="transparent!important"
 			fontSize={18}
 			fontWeight="normal"
+			style={style}
 		>
 			{title}
 		</Button>

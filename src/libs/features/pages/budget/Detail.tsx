@@ -9,8 +9,9 @@ import {
 	Spinner,
 } from '@chakra-ui/react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { useMemo, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import format from 'date-fns/format';
+import { FiRefreshCw } from 'react-icons/fi';
 import { useGetBudget } from '@/libs/data-access/hooks/query/useGetBudget';
 import { formatIdr } from '@/libs/utils/formatIdr';
 import {
@@ -24,6 +25,8 @@ import { FormExpenseValue } from './components/type';
 import { PrimaryButton } from '@/libs/ui/button/PrimaryButton';
 import { Search } from './components/Search';
 import { GroupExpenses } from './components/GroupExpenses';
+import { env } from '@/libs/env';
+import { putBudget } from '@/libs/data-access/api/budget';
 
 export default function BudgetDetailPage() {
 	const [dataToEdit, setDataToEdit] = useState<
@@ -98,20 +101,18 @@ export default function BudgetDetailPage() {
 		toast({ description: 'Berhasil menghapus data!' });
 	};
 
-	// useEffect(() => {
-	// 	if (!budgetQuery.data || !budgetId) return;
-	// 	const { expenses, amount, name } = budgetQuery.data;
-	// 	console.log(expenses);
-	// 	console.log(currentTotalExpense);
-	// 	if (expenses !== currentTotalExpense) {
-	// 		putBudget({
-	// 			id: budgetId,
-	// 			expenses: currentTotalExpense,
-	// 			amount,
-	// 			name,
-	// 		}).then(() => budgetQuery.refetch());
-	// 	}
-	// }, [currentTotalExpense, budgetQuery.data, budgetId, budgetQuery]);
+	const resyncBudget = useCallback(() => {
+		if (!budgetQuery.data || !budgetId) return;
+		const { expenses, amount, name } = budgetQuery.data;
+		if (expenses !== currentTotalExpense) {
+			putBudget({
+				id: budgetId,
+				expenses: currentTotalExpense,
+				amount,
+				name,
+			}).then(() => budgetQuery.refetch());
+		}
+	}, [budgetId, budgetQuery, currentTotalExpense]);
 
 	const isTransactionNotEmpty =
 		transactionsQuery.data && transactionsQuery.data.length > 0;
@@ -121,7 +122,16 @@ export default function BudgetDetailPage() {
 			<AppBar
 				title={budgetQuery.data?.name ?? location.state?.budgetName}
 				onBack={() => navigate(`/room/${roomId}/budget`, { replace: true })}
-				rightActions={[{ title: 'Tambah', onClick: modalAddExpense.onOpen }]}
+				rightActions={[
+					env.appEnv === 'dev'
+						? {
+								icon: <FiRefreshCw />,
+								style: { fontSize: 20 },
+								onClick: resyncBudget,
+						  }
+						: {},
+					{ title: 'Tambah', onClick: modalAddExpense.onOpen },
+				]}
 			/>
 			<Box h="4" />
 			<Search onSearch={setSearchQuery} />
