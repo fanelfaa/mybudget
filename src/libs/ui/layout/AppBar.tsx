@@ -53,11 +53,13 @@ export const AppBar = ({
 	leftAction,
 }: AppBarProps) => {
 	const [showSmallTitle, setShowSmallTitle] = useState(false);
+	const [hideBigTitle, setHideBigTitle] = useState(false);
 	const uniqId = useId();
 
 	const handleScroll = () => {
 		const position = window.scrollY;
 		setShowSmallTitle(position >= 40);
+		setHideBigTitle(position >= 45);
 	};
 
 	useEffect(() => {
@@ -75,7 +77,7 @@ export const AppBar = ({
 				position="sticky"
 				zIndex="100"
 				top="0"
-				bg="whiteAlpha.700"
+				bg={hideBigTitle ? 'whiteAlpha.700' : 'white'}
 				blur="md"
 				backdropFilter="blur(10px)"
 				alignItems="center"
