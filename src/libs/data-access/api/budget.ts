@@ -43,6 +43,7 @@ export const deleteBudget = async (id: string) =>
 
 export type PutBudgetParams = Pick<PostBudgetParams, 'name' | 'amount'> & {
 	id: string;
+	expenses?: number;
 };
 
 export const putBudget = async ({ id, ...otherParams }: PutBudgetParams) =>
