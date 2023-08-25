@@ -5,12 +5,20 @@ import { BaseLayout } from '@/libs/ui/layout';
 // import BudgetListPage from '../pages/budget/List';
 // import BudgetDetailPage from '../pages/budget/Detail';
 import { getRooms } from '@/libs/data-access/api/room';
-import React from 'react';
+import { lazy, Suspense } from 'react';
+import { LoadingScreen } from '@/libs/ui/loading-screen';
 
-const LoginPage = React.lazy(() => import('../pages/login/Login'));
-const RoomPage = React.lazy(() => import('../pages/room/Room'));
-const BudgetListPage = React.lazy(() => import('../pages/budget/List'));
-const BudgetDetailPage = React.lazy(() => import('../pages/budget/Detail'));
+const loadable = (Component: any) => (props: JSX.IntrinsicAttributes) =>
+  (
+    <Suspense fallback={<LoadingScreen />}>
+      <Component {...props} />
+    </Suspense>
+  );
+
+const LoginPage = loadable(lazy(() => import('../pages/login/Login')));
+const RoomPage = loadable(lazy(() => import('../pages/room/Room')));
+const BudgetListPage = loadable(lazy(() => import('../pages/budget/List')));
+const BudgetDetailPage = loadable(lazy(() => import('../pages/budget/Detail')));
 
 export const publicRoutes: RouteObject[] = [
 	{
