@@ -16,7 +16,7 @@ import {
 import { FormikProps, useFormik } from 'formik';
 import React from 'react';
 import { AddRoomValidationSchema } from '@/libs/validations/room';
-import { postRoom, putRoom } from '@/libs/data-access/api/room';
+import { putRoom } from '@/libs/data-access/api/room';
 import { PrimaryButton } from '@/libs/ui/button/PrimaryButton';
 import { FormRoomValue } from '../type';
 
@@ -26,7 +26,7 @@ type ModalFormRoomProps = {
 	modalTitle: string;
 };
 
-const ModalFormRoom = ({
+export const ModalFormRoom = ({
 	disclosureProps,
 	formik,
 	modalTitle,
@@ -129,45 +129,6 @@ export function ModalEditRoom({
 			disclosureProps={disclosureProps}
 			formik={formik}
 			modalTitle="Edit Room"
-		/>
-	);
-}
-
-export type ModalAddRoomProps = {
-	onSuccess: () => void;
-
-	disclosureProps: UseDisclosureReturn;
-};
-
-export function ModalAddRoom({
-	onSuccess,
-	disclosureProps,
-}: ModalAddRoomProps) {
-	const formik = useFormik<FormRoomValue>({
-		initialValues: {
-			name: '',
-		},
-		onSubmit: async ({ name }, { setErrors, resetForm }) => {
-			return postRoom({
-				name,
-			}).then((res) => {
-				if (res.error) {
-					setErrors({ name: res.error.message });
-					return;
-				}
-				onSuccess();
-				disclosureProps.onClose();
-				resetForm();
-			});
-		},
-		validationSchema: AddRoomValidationSchema,
-	});
-
-	return (
-		<ModalFormRoom
-			disclosureProps={disclosureProps}
-			formik={formik}
-			modalTitle={`Tambah Periode`}
 		/>
 	);
 }

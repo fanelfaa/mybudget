@@ -1,19 +1,12 @@
 import { Navigate, RouteObject } from 'react-router-dom';
+import { lazy } from 'react';
 import { BaseLayout } from '@/libs/ui/layout';
 // import LoginPage from '../pages/login/Login';
 // import RoomPage from '../pages/room/Room';
 // import BudgetListPage from '../pages/budget/List';
 // import BudgetDetailPage from '../pages/budget/Detail';
 import { getRooms } from '@/libs/data-access/api/room';
-import { lazy, Suspense } from 'react';
-import { LoadingScreen } from '@/libs/ui/loading-screen';
-
-const loadable = (Component: any) => (props: JSX.IntrinsicAttributes) =>
-  (
-    <Suspense fallback={<LoadingScreen />}>
-      <Component {...props} />
-    </Suspense>
-  );
+import { loadable } from '@/libs/ui/loadable';
 
 const LoginPage = loadable(lazy(() => import('../pages/login/Login')));
 const RoomPage = loadable(lazy(() => import('../pages/room/Room')));
@@ -38,7 +31,7 @@ export const privateRoutes: RouteObject[] = [
 			{
 				path: '/room',
 				element: <RoomPage />,
-            loader: () => getRooms(),
+				loader: () => getRooms(),
 			},
 			{
 				path: '/room/:roomId/budget',
