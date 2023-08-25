@@ -1,15 +1,17 @@
 import { Box, Button, VStack, useDisclosure, useToast } from '@chakra-ui/react';
-import { Link } from 'react-router-dom';
-import { useGetRooms } from '@/libs/data-access/hooks/query/useGetRooms';
+import { Link, useLoaderData, useRevalidator } from 'react-router-dom';
 import { AppBar } from '@/libs/ui/layout/AppBar';
 import { ModalAddRoom } from './components/ModalRoom';
 import { logout } from '@/libs/data-access/api/logout';
+import { getRooms } from '@/libs/data-access/api/room';
 
 const RoomPage = () => {
 	const modalAddRoom = useDisclosure();
 	const toast = useToast();
 
-	const roomsQuery = useGetRooms();
+   const rooms = useLoaderData() as Awaited<ReturnType<typeof getRooms>>;
+
+   const revalidator = useRevalidator();
 
 	return (
 		<>
@@ -20,7 +22,7 @@ const RoomPage = () => {
 			/>
 			<Box h="8" />
 			<VStack align="stretch" gap="4">
-				{roomsQuery.data?.map((room) => (
+				{rooms.map((room) => (
 					<Button
 						as={Link}
 						to={`/room/${room.room_id}/budget`}
@@ -35,7 +37,7 @@ const RoomPage = () => {
 			</VStack>
 			<ModalAddRoom
 				onSuccess={() => {
-					roomsQuery.refetch();
+               revalidator.revalidate();
 					toast({ description: 'Berhasil menambahkan periode!' });
 				}}
 				disclosureProps={modalAddRoom}
