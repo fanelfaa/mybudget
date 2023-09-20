@@ -12,7 +12,7 @@ export const BaseLayout = (props: BaseLayoutProps) => (
 		minH="100vh"
 		w="md"
 		maxW="100%"
-		bgColor="white"
+		bgColor="Background"
 		mx="auto"
 		{...props}
 	>

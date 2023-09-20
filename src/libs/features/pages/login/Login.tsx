@@ -46,12 +46,12 @@ const LoginPage = () => {
 			minH="100vh"
 			w="md"
 			maxW="100%"
-			bgColor="white"
+			bgColor="Background"
 			mx="auto"
 		>
 			<Heading>Login</Heading>
 			<Box h="10" />
-			<Box bg="white" rounded="md">
+			<Box bg="Background" rounded="md">
 				<form onSubmit={formik.handleSubmit}>
 					<VStack spacing={4} align="flex-start">
 						<FormControl

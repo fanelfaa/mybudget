@@ -55,11 +55,12 @@ export const BudgetItem = (props: BudgetItemProps) => {
 			<Grid
 				templateRows="auto auto auto"
 				gap="2"
-				shadow="xs"
 				rounded="lg"
-				bg="white"
+				bg="Background"
 				px="3"
 				py="2"
+				borderWidth="1px"
+				borderColor="MBorder"
 			>
 				<Grid templateColumns="1fr auto" alignItems="center">
 					<Heading
@@ -68,7 +69,7 @@ export const BudgetItem = (props: BudgetItemProps) => {
 						to={`${props.id}`}
 						state={{ budgetName: props.name }}
 						fontSize={18}
-						color="gray.700"
+						color="GrayText"
 						fontWeight="medium"
 					>
 						{props.name}
@@ -83,7 +84,7 @@ export const BudgetItem = (props: BudgetItemProps) => {
 							size="sm"
 							fontSize={18}
 							mr="-2"
-							color="gray.600"
+							color="GrayText"
 						/>
 						<MenuList>
 							<MenuItem icon={<FiEdit />} onClick={props.onClickEdit}>
@@ -100,7 +101,7 @@ export const BudgetItem = (props: BudgetItemProps) => {
 					</Menu>
 				</Grid>
 				<TransactionsProgress amount={props.amount} expense={props.expense} />
-				<Flex alignItems="center" wrap="wrap" fontSize={14} color="gray.600">
+				<Flex alignItems="center" wrap="wrap" fontSize={14} color="GrayText">
 					<Text>Budget: {formatIdr(props.amount)}</Text>
 					<Text ml="auto">Pengeluaran: {formatIdr(props.expense)}</Text>
 				</Flex>
