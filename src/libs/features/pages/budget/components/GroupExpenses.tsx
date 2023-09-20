@@ -39,18 +39,25 @@ export const GroupExpenses = ({
 				justifyContent="space-between"
 				alignItems="center"
 				h="12"
-				bg="white"
+				bg="Background"
 				px="3"
 				rounded="lg"
 			>
-				<Text fontSize={16} color="gray.600">
+				<Text fontSize={16} color="GrayText">
 					{stringDate}
 				</Text>
-				<Text fontSize={16} color="gray.600" fontWeight="medium">
+				<Text fontSize={16} color="GrayText" fontWeight="medium">
 					{formatIdr(totalExpense)}
 				</Text>
 			</Flex>
-			<Box background="white" rounded="xl" shadow="xs" overflow="hidden">
+			<Box
+				background="Background"
+				rounded="xl"
+				overflow="hidden"
+				borderColor="MBorder"
+				borderWidth="1px"
+				bg="Background"
+			>
 				{sortedTransactions.map((t) => (
 					<TransactionItem
 						key={t.id}

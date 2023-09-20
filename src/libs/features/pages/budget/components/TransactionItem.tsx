@@ -66,9 +66,8 @@ export const TransactionItem = (props: TransactionItemProps) => {
 				gap="2"
 				px="3"
 				py="2"
-				shadow="xs"
-				// rounded="lg"
-				bg="white"
+				borderColor="MBorder"
+				borderBottomWidth="1px"
 			>
 				{/* <Flex direction="column" gap="2"> */}
 				<Grid alignItems="center" templateColumns="1fr auto" gap="3">
@@ -76,12 +75,12 @@ export const TransactionItem = (props: TransactionItemProps) => {
 						noOfLines={1}
 						as="h4"
 						fontSize={18}
-						color="gray.800"
+						color="GrayText"
 						fontWeight="medium"
 					>
 						{props.note}
 					</Heading>
-					<Text color="gray.600" fontSize={16}>
+					<Text color="GrayText" fontSize={16}>
 						{formatIdr(props.amount)}
 					</Text>
 				</Grid>
@@ -103,7 +102,7 @@ export const TransactionItem = (props: TransactionItemProps) => {
 						size="sm"
 						fontSize={18}
 						mr="-2"
-						color="gray.600"
+						color="GrayText"
 					/>
 					<MenuList>
 						<MenuItem icon={<FiEdit />} onClick={props.onClickEdit}>

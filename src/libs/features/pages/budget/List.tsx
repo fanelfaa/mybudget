@@ -76,8 +76,15 @@ export default function BudgetListPage() {
 			<Box h="4" />
 			<Search onSearch={setSearchQuery} />
 			<Box h="4" />
-			<Box shadow="xs" rounded="lg" bg="white" px="3" py="2">
-				<Text color="gray.600">
+			<Box
+				borderWidth="1px"
+				rounded="lg"
+				bg="Background"
+				px="3"
+				py="2"
+				borderColor="MBorder"
+			>
+				<Text color="GrayText">
 					Total budget: <strong>{formatIdr(totalBudget)}</strong>
 				</Text>
 			</Box>
