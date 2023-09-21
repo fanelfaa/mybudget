@@ -16,7 +16,7 @@ export const BaseLayout = (props: BaseLayoutProps) => {
 			minH="100vh"
 			w="md"
 			maxW="100%"
-			bgColor="Background"
+			bgColor="MBackground"
 			mx="auto"
 			{...props}
 		>
@@ -29,7 +29,7 @@ export const BaseLayout = (props: BaseLayoutProps) => {
 					onClick={toggleColorMode}
 					aria-label="change theme"
 					title="Change Theme"
-					background="Background"
+					background="MBackground"
 				/>
 			</Box>
 		</Box>

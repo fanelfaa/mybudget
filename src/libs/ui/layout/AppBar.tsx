@@ -80,7 +80,7 @@ export const AppBar = ({
 				position="sticky"
 				zIndex="100"
 				top="0"
-				bg={hideBigTitle ? 'Background.700' : 'Background'}
+				bg={hideBigTitle ? 'MAppBarShow' : 'MBackground'}
 				blur="md"
 				backdropFilter="blur(15px)"
 				alignItems="center"
@@ -126,7 +126,7 @@ export const AppBar = ({
 			</Grid>
 			<Heading
 				noOfLines={1}
-				color={!showSmallTitle ? 'WindowText' : 'transparent'}
+				color={!showSmallTitle ? 'MTitleText' : 'transparent'}
 				transition="all .2s ease-in-out"
 				size="xl"
 				fontSize={40}

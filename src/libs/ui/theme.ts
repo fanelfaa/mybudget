@@ -17,7 +17,11 @@ export const theme = extendTheme(
 		config,
 		semanticTokens: {
 			colors: {
-				MBorder: { _light: 'gray.100', _dark: 'gray.900' },
+				MBorder: { _light: 'gray.200', _dark: 'gray.800' },
+				MBackground: { _light: 'white', _dark: '#121212' },
+				MAppBarShow: { _light: 'white.700', _dark: '#12121299' },
+				MGrayText: { _light: 'gray.700', _dark: 'gray.100' },
+				MTitleText: { _light: 'gray.900', _dark: 'gray.50' },
 			},
 		},
 		styles: {

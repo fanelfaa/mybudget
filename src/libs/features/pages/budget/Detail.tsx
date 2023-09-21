@@ -142,7 +142,7 @@ export default function BudgetDetailPage() {
 						borderColor="MBorder"
 						borderWidth="1px"
 						rounded="lg"
-						bg="Background"
+						bg="MBackground"
 						px="3"
 						py="2"
 					>

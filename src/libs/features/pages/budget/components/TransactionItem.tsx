@@ -75,12 +75,12 @@ export const TransactionItem = (props: TransactionItemProps) => {
 						noOfLines={1}
 						as="h4"
 						fontSize={18}
-						color="GrayText"
+						color="MGrayText"
 						fontWeight="medium"
 					>
 						{props.note}
 					</Heading>
-					<Text color="GrayText" fontSize={16}>
+					<Text color="MGrayText" fontSize={16}>
 						{formatIdr(props.amount)}
 					</Text>
 				</Grid>
@@ -102,7 +102,7 @@ export const TransactionItem = (props: TransactionItemProps) => {
 						size="sm"
 						fontSize={18}
 						mr="-2"
-						color="GrayText"
+						color="MGrayText"
 					/>
 					<MenuList>
 						<MenuItem icon={<FiEdit />} onClick={props.onClickEdit}>
