@@ -85,7 +85,7 @@ export default function BudgetDetailPage() {
 		}
 
 		filteredData.forEach((t) => {
-			const date = t.date;
+			const date = t.date + t.month * 100;
 			const prevGroup = group.get(date);
 			if (!prevGroup) {
 				group.set(date, [t]);
