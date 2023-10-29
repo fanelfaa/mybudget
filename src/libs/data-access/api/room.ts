@@ -26,8 +26,18 @@ export type PostRoomParams = {
 	name: string;
 };
 
-export const postRoom = async ({ name }: PostRoomParams) =>
-	supabase.from('rooms').insert({ name });
+export const postRoom = async ({ name }: PostRoomParams) =>{
+	const resCreateRoom = await supabase.from('rooms').insert({ name });
+	if(!resCreateRoom.error){
+		const room = await supabase.from('rooms').select('id').eq('name', name).single();
+		const { data: { user } } = await supabase.auth.getUser()
+		if(room.data && user){
+			return await supabase.from('user_room').insert({room_id: room.data.id, user_id: user.id});
+		}
+	}
+
+	return resCreateRoom;
+};
 
 export type PutRoomParams = { id: string } & PostRoomParams;
 
