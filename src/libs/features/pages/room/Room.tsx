@@ -50,13 +50,13 @@ const RoomPage = () => {
           >
             <Heading
               noOfLines={1}
-              fontSize={18}
+              fontSize="1.1rem"
               color="MGrayText"
               fontWeight="medium"
             >
               {room.rooms.name}
             </Heading>
-            <Text fontSize={16} color="#ff4d4d">
+            <Text fontSize="1rem" color="#ff4d4d">
               {formatIdr(room.rooms.expenses)}
             </Text>
           </Grid>

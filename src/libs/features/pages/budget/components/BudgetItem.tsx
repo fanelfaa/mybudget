@@ -68,7 +68,7 @@ export const BudgetItem = (props: BudgetItemProps) => {
             as={Link}
             to={`${props.id}`}
             state={{ budgetName: props.name }}
-            fontSize={18}
+            fontSize="1.1rem"
             color="MGrayText"
             fontWeight="medium"
           >
@@ -82,7 +82,7 @@ export const BudgetItem = (props: BudgetItemProps) => {
               variant="ghost"
               isDisabled={isLoadingDelete}
               size="sm"
-              fontSize={18}
+              fontSize="1.2rem"
               mr="-2"
               color="MGrayText"
             />
@@ -101,7 +101,12 @@ export const BudgetItem = (props: BudgetItemProps) => {
           </Menu>
         </Grid>
         <TransactionsProgress amount={props.amount} expense={props.expense} />
-        <Flex alignItems="center" wrap="wrap" fontSize={14} color="MGrayText">
+        <Flex
+          alignItems="center"
+          wrap="wrap"
+          fontSize=".85rem"
+          color="MGrayText"
+        >
           <Text>Budget: {formatIdr(props.amount)}</Text>
           <Text ml="auto">
             Pengeluaran:{" "}

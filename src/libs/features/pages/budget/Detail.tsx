@@ -174,7 +174,7 @@ export default function BudgetDetailPage() {
         </>
       ) : null}
       <Box h="8" />
-      <VStack align="stretch" gap="10" pb="8">
+      <VStack align="stretch" gap="10" pb="12">
         {groupExpenseDaily?.size ? (
           [...groupExpenseDaily.keys()].map((dateKey) => {
             const transactions = groupExpenseDaily.get(dateKey)!;

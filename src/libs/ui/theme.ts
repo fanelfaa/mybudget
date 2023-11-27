@@ -33,5 +33,9 @@ export const theme = extendTheme(
         },
       }),
     },
+    fonts: {
+      heading: `'Poppins', ${fallbackFonts}`,
+      body: `'Poppins', ${fallbackFonts}`,
+    },
   }
 );
