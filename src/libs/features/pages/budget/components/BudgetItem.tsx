@@ -68,7 +68,7 @@ export const BudgetItem = (props: BudgetItemProps) => {
             as={Link}
             to={`${props.id}`}
             state={{ budgetName: props.name }}
-            fontSize="1.1rem"
+            fontSize="1rem"
             color="MGrayText"
             fontWeight="medium"
           >
@@ -110,7 +110,9 @@ export const BudgetItem = (props: BudgetItemProps) => {
           <Text>Budget: {formatIdr(props.amount)}</Text>
           <Text ml="auto">
             Pengeluaran:{" "}
-            <span style={{ color: "#ff4d4d" }}>{formatIdr(props.expense)}</span>
+            <Text as="span" color="MRedText">
+              {formatIdr(props.expense)}
+            </Text>
           </Text>
         </Flex>
       </Grid>

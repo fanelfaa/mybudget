@@ -74,7 +74,7 @@ export const TransactionItem = (props: TransactionItemProps) => {
           <Heading
             noOfLines={2}
             as="h4"
-            fontSize="1.1rem"
+            fontSize="1rem"
             color="MGrayText"
             fontWeight="medium"
           >

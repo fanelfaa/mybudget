@@ -150,9 +150,9 @@ export default function BudgetDetailPage() {
               <Text>Budget: {formatIdr(budgetQuery.data?.amount ?? 0)}</Text>
               <Text>
                 Pengeluaran:{" "}
-                <span style={{ color: "#ff4d4d" }}>
+                <Text as="span" color="MRedText">
                   {formatIdr(budgetQuery.data?.expenses ?? 0)}
-                </span>
+                </Text>
               </Text>
             </Flex>
             <Box h="2" />

@@ -22,8 +22,9 @@ export const theme = extendTheme(
         MBorder: { _light: "gray.200", _dark: "gray.800" },
         MBackground: { _light: "white", _dark: "#121212" },
         MAppBarShow: { _light: "white.700", _dark: "#12121299" },
-        MGrayText: { _light: "gray.700", _dark: "gray.100" },
-        MTitleText: { _light: "gray.900", _dark: "gray.50" },
+        MGrayText: { _light: "#424242", _dark: "#d1d1d1" },
+        MTitleText: { _light: "gray.900", _dark: "#dfdfdf" },
+        MRedText: { _light: "#ff4d4d", _dark: "#e38686" },
       },
     },
     styles: {
