@@ -69,7 +69,6 @@ export const TransactionItem = (props: TransactionItemProps) => {
         borderColor="MBorder"
         borderBottomWidth="1px"
       >
-        {/* <Flex direction="column" gap="2"> */}
         <Grid alignItems="center" templateColumns="1fr auto" gap="3">
           <Heading
             noOfLines={2}
@@ -84,13 +83,6 @@ export const TransactionItem = (props: TransactionItemProps) => {
             {formatIdr(props.amount)}
           </Text>
         </Grid>
-        {/* <Text color="gray.600" fontSize="sm">
-						{format(
-							new Date(props.year, props.month - 1, props.date),
-							'dd-MM-yyyy'
-						)}
-					</Text> */}
-        {/* </Flex> */}
 
         <Menu>
           <MenuButton
@@ -108,7 +100,7 @@ export const TransactionItem = (props: TransactionItemProps) => {
             <MenuItem icon={<FiEdit />} onClick={props.onClickEdit}>
               Ubah
             </MenuItem>
-            <MenuItem icon={<FiDelete />} onClick={onOpen} color="red">
+            <MenuItem icon={<FiDelete />} onClick={onOpen} color="MRedText">
               Hapus
             </MenuItem>
           </MenuList>

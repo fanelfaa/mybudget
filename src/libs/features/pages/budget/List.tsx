@@ -13,7 +13,7 @@ import {
   useNavigate,
   useParams,
 } from "react-router-dom";
-import { CSSProperties, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useGetBudgets } from "@/libs/data-access/hooks/query/useGetBudgets";
 import { BudgetItem } from "./components/BudgetItem";
 import { AppBar } from "@/libs/ui/layout/AppBar";
@@ -94,7 +94,7 @@ export default function BudgetListPage() {
           budgetsQuery.data
             .sort((a, b) => a.name.localeCompare(b.name))
             .filter((it) => it.name.toLowerCase().includes(searchQuery))
-            .map((budget, i) => (
+            .map((budget) => (
               <BudgetItem
                 key={budget.id}
                 id={budget.id}
@@ -106,8 +106,6 @@ export default function BudgetListPage() {
                   setDataToEdit(budget);
                   modalEditBudget.onOpen();
                 }}
-                className="animate-fade-up"
-                style={{ "--animation-delay": `${i * 100}ms` } as CSSProperties}
               />
             ))
         ) : (

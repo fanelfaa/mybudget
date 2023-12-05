@@ -9,7 +9,7 @@ import {
   Spinner,
 } from "@chakra-ui/react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { CSSProperties, useCallback, useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import format from "date-fns/format";
 import { FiRefreshCw } from "react-icons/fi";
 import { useGetBudget } from "@/libs/data-access/hooks/query/useGetBudget";
@@ -176,7 +176,7 @@ export default function BudgetDetailPage() {
       <Box h="6" />
       <VStack align="stretch" gap="10" pb="12">
         {groupExpenseDaily?.size ? (
-          [...groupExpenseDaily.keys()].map((dateKey, i) => {
+          [...groupExpenseDaily.keys()].map((dateKey) => {
             const transactions = groupExpenseDaily.get(dateKey)!;
             return (
               <GroupExpenses
@@ -197,8 +197,6 @@ export default function BudgetDetailPage() {
                   modalEditExpense.onOpen();
                 }}
                 onSuccessDelete={onSuccessDelete}
-                className="animate-fade-up"
-                style={{ "--animation-delay": `${i * 100}ms` } as CSSProperties}
               />
             );
           })

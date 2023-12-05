@@ -8,7 +8,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import { Link, useLoaderData, useRevalidator } from "react-router-dom";
-import { CSSProperties, Suspense, lazy } from "react";
+import { Suspense, lazy } from "react";
 import { AppBar } from "@/libs/ui/layout/AppBar";
 import { logout } from "@/libs/data-access/api/logout";
 import { getRooms } from "@/libs/data-access/api/room";
@@ -33,7 +33,7 @@ const RoomPage = () => {
       />
       <Box h="8" />
       <VStack align="stretch" gap="4">
-        {rooms.map((room, i) => (
+        {rooms.map((room) => (
           <Grid
             templateColumns="1fr auto"
             gap="2"
@@ -47,8 +47,7 @@ const RoomPage = () => {
             state={{ roomName: room.rooms?.name }}
             key={room.id}
             alignItems="baseline"
-            className="box-shadow animate-fade-up"
-            style={{ "--animation-delay": `${i * 100}ms` } as CSSProperties}
+            className="box-shadow"
           >
             <Heading
               noOfLines={1}

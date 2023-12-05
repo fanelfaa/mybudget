@@ -97,7 +97,7 @@ export const BudgetItem = (props: BudgetItemProps) => {
               <MenuItem
                 icon={<FiDelete />}
                 onClick={alertDialogDelete.onOpen}
-                color="red"
+                color="MRedText"
               >
                 Hapus
               </MenuItem>
