@@ -30,7 +30,7 @@ export const BaseLayout = (props: BaseLayoutProps) => {
           aria-label="change theme"
           title="Change Theme"
           background="MBackground"
-          className="box-shadow"
+          className="box-shadow animate-fade-up"
         />
       </Box>
     </Box>
