@@ -14,5 +14,6 @@ export const useGetTransactions = (
 		queryKey: key,
 		queryFn: () => getTransactions(params),
 		...options,
+		staleTime: 60000
 	});
 };

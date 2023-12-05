@@ -10,5 +10,6 @@ export const useGetBudgets = (
 		queryKey: key,
 		queryFn: () => getBudgets(params),
 		...options,
+		staleTime: 60000,
 	});
 };

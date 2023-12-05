@@ -13,7 +13,7 @@ export default defineConfig({
       },
       registerType: "autoUpdate",
       injectRegister: "auto",
-      includeAssets: ["favicon.ico", "apple-touch-icon.png", "mask-icon.svg"],
+      includeAssets: ["favicon.ico", "apple-touch-icon.png", "mask-icon.svg", "fonts/*.woff2"],
       manifest: {
         name: "Budget AF",
         short_name: "BudgetAF",

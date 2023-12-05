@@ -7,5 +7,6 @@ export const useGetRoom = (id: string, options: { enabled?: boolean }) => {
 		queryKey: key,
 		queryFn: () => getRoom(id),
 		...options,
+		staleTime: 60000
 	});
 };

@@ -8,5 +8,6 @@ export const useGetBudget = (id: string, options: { enabled?: boolean }) => {
 
 		queryFn: () => getBudget(id),
 		...options,
+		staleTime: 60000
 	});
 };
