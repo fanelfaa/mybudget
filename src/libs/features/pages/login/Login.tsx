@@ -12,6 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { LoginValidationSchema } from "@/libs/validations/login";
 import { PrimaryButton } from "@/libs/ui/button/PrimaryButton";
 import { supabase } from "@/libs/data-access/supabase";
+import { CSSProperties } from "react";
 
 const LoginPage = () => {
   const navigate = useNavigate();
@@ -48,15 +49,16 @@ const LoginPage = () => {
       maxW="100%"
       bgColor="MBackground"
       mx="auto"
-      className="animate-fade-up"
     >
-      <Heading>Login</Heading>
+      <Heading className="animate-fade-up">Login</Heading>
       <Box h="10" />
       <Box bg="MBackground" rounded="md">
         <form onSubmit={formik.handleSubmit}>
           <VStack spacing={4} align="flex-start">
             <FormControl
               isInvalid={!!formik.errors.email && formik.touched.email}
+              className="animate-fade-up"
+              style={{ "--animation-delay": "100ms" } as CSSProperties}
             >
               <FormLabel htmlFor="email">Email Address</FormLabel>
               <Input
@@ -72,6 +74,8 @@ const LoginPage = () => {
             </FormControl>
             <FormControl
               isInvalid={!!formik.errors.password && formik.touched.password}
+              className="animate-fade-up"
+              style={{ "--animation-delay": "200ms" } as CSSProperties}
             >
               <FormLabel htmlFor="password">Password</FormLabel>
               <Input
@@ -90,6 +94,8 @@ const LoginPage = () => {
               type="submit"
               width="full"
               isDisabled={formik.isSubmitting}
+              className="animate-fade-up"
+              style={{ "--animation-delay": "300ms" } as CSSProperties}
             >
               Login
             </PrimaryButton>
