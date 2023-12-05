@@ -13,7 +13,7 @@ import {
   useNavigate,
   useParams,
 } from "react-router-dom";
-import { useMemo, useState } from "react";
+import { CSSProperties, useMemo, useState } from "react";
 import { useGetBudgets } from "@/libs/data-access/hooks/query/useGetBudgets";
 import { BudgetItem } from "./components/BudgetItem";
 import { AppBar } from "@/libs/ui/layout/AppBar";
@@ -75,7 +75,7 @@ export default function BudgetListPage() {
       />
       <Box h="4" />
       <Search onSearch={setSearchQuery} />
-      <Box h="4" />
+      <Box h="6" />
       <Box
         borderWidth="1px"
         rounded="lg"
@@ -88,13 +88,13 @@ export default function BudgetListPage() {
           Total budget: <strong>{formatIdr(totalBudget)}</strong>
         </Text>
       </Box>
-      <Box h="8" />
-      <VStack align="stretch" gap="4" pb="12">
+      <Box h="6" />
+      <VStack align="stretch" gap="5" pb="12">
         {budgetsQuery.data && budgetsQuery.data.length > 0 ? (
           budgetsQuery.data
             .sort((a, b) => a.name.localeCompare(b.name))
             .filter((it) => it.name.toLowerCase().includes(searchQuery))
-            .map((budget) => (
+            .map((budget, i) => (
               <BudgetItem
                 key={budget.id}
                 id={budget.id}
@@ -106,6 +106,8 @@ export default function BudgetListPage() {
                   setDataToEdit(budget);
                   modalEditBudget.onOpen();
                 }}
+                className="animate-fade-up"
+                style={{ "--animation-delay": `${i * 100}ms` } as CSSProperties}
               />
             ))
         ) : (

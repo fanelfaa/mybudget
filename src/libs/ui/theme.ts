@@ -19,7 +19,7 @@ export const theme = extendTheme(
     config,
     semanticTokens: {
       colors: {
-        MBorder: { _light: "gray.200", _dark: "gray.800" },
+        MBorder: { _light: "gray.300", _dark: "#202836" },
         MBackground: { _light: "white", _dark: "#121212" },
         MAppBarShow: { _light: "white.700", _dark: "#12121299" },
         MGrayText: { _light: "#424242", _dark: "#d1d1d1" },

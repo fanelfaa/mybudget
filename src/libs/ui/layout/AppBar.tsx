@@ -128,7 +128,7 @@ export const AppBar = ({
       <Heading
         noOfLines={2}
         color={!showSmallTitle ? "MTitleText" : "transparent"}
-        transition="all .2s ease-in-out"
+        transition="all .3s ease-out"
         size="xl"
         fontSize="2.5rem"
         minH="14"

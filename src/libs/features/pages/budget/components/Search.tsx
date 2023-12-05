@@ -22,6 +22,8 @@ export const Search = ({ onSearch }: SearchProps) => {
         rounded="md"
         placeholder="Cari..."
         onChange={onChange}
+        borderColor='MBorder'
+        borderWidth={1}
       />
       <InputRightElement>
         <FiSearch />

@@ -19,7 +19,7 @@ import {
 } from "@chakra-ui/react";
 import { Link } from "react-router-dom";
 import { FiMoreVertical, FiEdit, FiDelete } from "react-icons/fi";
-import React, { useState } from "react";
+import React, { CSSProperties, useState } from "react";
 import { formatIdr } from "@/libs/utils/formatIdr";
 import { TransactionsProgress } from "./Progress";
 import { deleteBudget } from "@/libs/data-access/api/budget";
@@ -31,6 +31,8 @@ export type BudgetItemProps = {
   expense: number;
   onClickEdit?: () => void;
   onSuccessDelete?: () => void;
+  className?: string;
+  style?: CSSProperties;
 };
 
 export const BudgetItem = (props: BudgetItemProps) => {
@@ -61,6 +63,8 @@ export const BudgetItem = (props: BudgetItemProps) => {
         py="2"
         borderWidth="1px"
         borderColor="MBorder"
+        className={["box-shadow", props.className].join(" ")}
+        style={props.style}
       >
         <Grid templateColumns="1fr auto" alignItems="center">
           <Heading

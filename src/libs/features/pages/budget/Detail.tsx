@@ -9,7 +9,7 @@ import {
   Spinner,
 } from "@chakra-ui/react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { useCallback, useMemo, useState } from "react";
+import { CSSProperties, useCallback, useMemo, useState } from "react";
 import format from "date-fns/format";
 import { FiRefreshCw } from "react-icons/fi";
 import { useGetBudget } from "@/libs/data-access/hooks/query/useGetBudget";
@@ -137,7 +137,7 @@ export default function BudgetDetailPage() {
       <Search onSearch={setSearchQuery} />
       {isTransactionNotEmpty ? (
         <>
-          <Box h="4" />
+          <Box h="6" />
           <Box
             borderColor="MBorder"
             borderWidth="1px"
@@ -150,7 +150,7 @@ export default function BudgetDetailPage() {
               <Text>Budget: {formatIdr(budgetQuery.data?.amount ?? 0)}</Text>
               <Text>
                 Pengeluaran:{" "}
-                <Text as="span" color="MRedText">
+                <Text as="span" color="MRedText" fontWeight="medium">
                   {formatIdr(budgetQuery.data?.expenses ?? 0)}
                 </Text>
               </Text>
@@ -173,10 +173,10 @@ export default function BudgetDetailPage() {
           </Box>
         </>
       ) : null}
-      <Box h="8" />
+      <Box h="6" />
       <VStack align="stretch" gap="10" pb="12">
         {groupExpenseDaily?.size ? (
-          [...groupExpenseDaily.keys()].map((dateKey) => {
+          [...groupExpenseDaily.keys()].map((dateKey, i) => {
             const transactions = groupExpenseDaily.get(dateKey)!;
             return (
               <GroupExpenses
@@ -197,6 +197,8 @@ export default function BudgetDetailPage() {
                   modalEditExpense.onOpen();
                 }}
                 onSuccessDelete={onSuccessDelete}
+                className="animate-fade-up"
+                style={{ "--animation-delay": `${i * 100}ms` } as CSSProperties}
               />
             );
           })

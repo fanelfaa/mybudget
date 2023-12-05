@@ -1,6 +1,6 @@
 import { Flex, Box, Text } from "@chakra-ui/react";
 import { format } from "date-fns";
-import { memo, useMemo } from "react";
+import { CSSProperties, memo, useMemo } from "react";
 import isEqual from "lodash/isEqual";
 import { formatIdr } from "@/libs/utils/formatIdr";
 import { TransactionItem } from "./TransactionItem";
@@ -12,6 +12,8 @@ export type GroupExpensesProps = {
   currentTotalExpense: number;
   onSuccessDelete: () => void;
   onClickEdit: (t: ReturnUseGetTransactions[0]) => void;
+  className?: string;
+  style?: CSSProperties;
 };
 
 export const GroupExpenses = ({
@@ -20,6 +22,8 @@ export const GroupExpenses = ({
   currentTotalExpense,
   onSuccessDelete,
   onClickEdit,
+  className,
+  style,
 }: GroupExpensesProps) => {
   const { date, month, year } = transactions[0];
   const groupDate = new Date(year, month - 1, date);
@@ -34,7 +38,7 @@ export const GroupExpenses = ({
   }, [transactions]);
 
   return (
-    <Box>
+    <Box className={className} style={style}>
       <Flex
         justifyContent="space-between"
         alignItems="center"
@@ -57,6 +61,7 @@ export const GroupExpenses = ({
         borderColor="MBorder"
         borderWidth="1px"
         bg="MBackground"
+        className="box-shadow"
       >
         {sortedTransactions.map((t) => (
           <TransactionItem
