@@ -66,8 +66,7 @@ export const TransactionItem = (props: TransactionItemProps) => {
             gap="2"
             px="3"
             py="2"
-            borderColor="MBorder"
-            borderBottomWidth="1px"
+            className="transaction-item"
          >
             <Grid alignItems="center" templateColumns="1fr auto" gap="3">
                <Heading

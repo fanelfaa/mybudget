@@ -62,6 +62,13 @@ export const GroupExpenses = ({
             borderWidth="1px"
             bg="MBackground"
             className="box-shadow"
+            sx={{
+               ".transaction-item:not(:last-child)": {
+                  borderColor: "var(--chakra-colors-MBorder)",
+                  borderBottomWidth: "1px",
+                  borderStyle: "dashed",
+               },
+            }}
          >
             {sortedTransactions.map((t) => (
                <TransactionItem
