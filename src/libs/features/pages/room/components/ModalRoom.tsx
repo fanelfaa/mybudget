@@ -12,13 +12,13 @@ import {
 	ModalFooter,
 	FormErrorMessage,
 	UseDisclosureReturn,
-} from '@chakra-ui/react';
-import { FormikProps, useFormik } from 'formik';
-import React from 'react';
-import { AddRoomValidationSchema } from '@/libs/validations/room';
-import { putRoom } from '@/libs/data-access/api/room';
-import { PrimaryButton } from '@/libs/ui/button/PrimaryButton';
-import { FormRoomValue } from '../type';
+} from "@chakra-ui/react";
+import { FormikProps, useFormik } from "formik";
+import React from "react";
+import { AddRoomValidationSchema } from "@/libs/validations/room";
+import { putRoom } from "@/libs/data-access/api/room";
+import { PrimaryButton } from "@/libs/ui/button/PrimaryButton";
+import { FormRoomValue } from "../type";
 
 type ModalFormRoomProps = {
 	formik: FormikProps<FormRoomValue>;
@@ -51,7 +51,7 @@ export const ModalFormRoom = ({
 			<ModalOverlay backdropFilter="blur(3px)" />
 			<ModalContent
 				style={{
-					position: 'absolute',
+					position: "absolute",
 					bottom: 0,
 					paddingBottom: 20,
 					margin: 0,

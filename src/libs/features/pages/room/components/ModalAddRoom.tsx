@@ -1,9 +1,9 @@
-import { UseDisclosureReturn } from '@chakra-ui/react';
-import { useFormik } from 'formik';
-import { postRoom } from '@/libs/data-access/api/room';
-import { AddRoomValidationSchema } from '@/libs/validations/room';
-import { FormRoomValue } from '../type';
-import { ModalFormRoom } from './ModalRoom';
+import { UseDisclosureReturn } from "@chakra-ui/react";
+import { useFormik } from "formik";
+import { postRoom } from "@/libs/data-access/api/room";
+import { AddRoomValidationSchema } from "@/libs/validations/room";
+import { FormRoomValue } from "../type";
+import { ModalFormRoom } from "./ModalRoom";
 
 export type ModalAddRoomProps = {
 	onSuccess: () => void;
@@ -17,7 +17,7 @@ export function ModalAddRoom({
 }: ModalAddRoomProps) {
 	const formik = useFormik<FormRoomValue>({
 		initialValues: {
-			name: '',
+			name: "",
 		},
 		onSubmit: async ({ name }, { setErrors, resetForm }) => {
 			return postRoom({
