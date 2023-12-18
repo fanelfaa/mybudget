@@ -1,28 +1,28 @@
+import { useGetBudgets } from "@/libs/data-access/hooks/query/useGetBudgets";
+import { useGetRoom } from "@/libs/data-access/hooks/query/useGetRoom";
+import { PrimaryButton } from "@/libs/ui/button/PrimaryButton";
+import { AppBar } from "@/libs/ui/layout/AppBar";
+import { formatIdr } from "@/libs/utils/formatIdr";
 import {
 	Box,
 	Flex,
-	VStack,
+	Spinner,
 	Text,
+	VStack,
 	useDisclosure,
 	useToast,
-	Spinner,
 } from "@chakra-ui/react";
+import { useMemo, useState } from "react";
 import {
 	Navigate,
 	useLocation,
 	useNavigate,
 	useParams,
 } from "react-router-dom";
-import { useMemo, useState } from "react";
-import { useGetBudgets } from "@/libs/data-access/hooks/query/useGetBudgets";
 import { BudgetItem } from "./components/BudgetItem";
-import { AppBar } from "@/libs/ui/layout/AppBar";
 import { ModalAddBudget, ModalEditBudget } from "./components/ModalBudget";
-import { FormBudgetValue } from "./components/type";
-import { formatIdr } from "@/libs/utils/formatIdr";
-import { PrimaryButton } from "@/libs/ui/button/PrimaryButton";
 import { Search } from "./components/Search";
-import { useGetRoom } from "@/libs/data-access/hooks/query/useGetRoom";
+import { FormBudgetValue } from "./components/type";
 
 export default function BudgetListPage() {
 	const [dataToEdit, setDataToEdit] = useState<
@@ -39,13 +39,11 @@ export default function BudgetListPage() {
 	const toast = useToast();
 	const location = useLocation();
 
-	// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 	const roomQuery = useGetRoom(roomId!, {
 		enabled: roomId !== undefined,
 	});
 
 	const budgetsQuery = useGetBudgets(
-		// eslint-disable-next-line @typescript-eslint/no-non-null-assertion
 		{ roomId: roomId! },
 		{ enabled: roomId !== undefined },
 	);

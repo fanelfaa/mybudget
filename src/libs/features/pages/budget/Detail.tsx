@@ -8,7 +8,6 @@ import { env } from "@/libs/env";
 import { PrimaryButton } from "@/libs/ui/button/PrimaryButton";
 import { AppBar } from "@/libs/ui/layout/AppBar";
 import { formatIdr } from "@/libs/utils/formatIdr";
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import {
 	Box,
 	Flex,
