@@ -1,5 +1,5 @@
-import { Button, Flex, Heading } from '@chakra-ui/react';
-import { logout } from '@/libs/data-access/api/logout';
+import { Button, Flex, Heading } from "@chakra-ui/react";
+import { logout } from "@/libs/data-access/api/logout";
 
 const HomePage = () => {
 	return (

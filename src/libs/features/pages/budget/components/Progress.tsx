@@ -1,6 +1,6 @@
-import { Progress } from '@chakra-ui/react';
-import Decimal from 'decimal.js';
-import { useMemo } from 'react';
+import { Progress } from "@chakra-ui/react";
+import Decimal from "decimal.js";
+import { useMemo } from "react";
 
 export type TransactionsProgressProps = {
 	amount: number;
@@ -20,10 +20,10 @@ export const TransactionsProgress = (props: TransactionsProgressProps) => {
 	}, [props.amount, props.expense]);
 
 	const progressColorScheme = useMemo(() => {
-		if (isMinus) return 'red';
-		if (progresValue < 70) return 'green';
-		if (progresValue <= 100) return 'blue';
-		return 'red';
+		if (isMinus) return "red";
+		if (progresValue < 70) return "green";
+		if (progresValue <= 100) return "blue";
+		return "red";
 	}, [isMinus, progresValue]);
 
 	return (

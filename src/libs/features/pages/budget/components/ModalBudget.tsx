@@ -13,13 +13,13 @@ import {
 	FormErrorMessage,
 	VStack,
 	UseDisclosureReturn,
-} from '@chakra-ui/react';
-import { FormikProps, useFormik } from 'formik';
-import React from 'react';
-import { AddBudgetValidationSchema } from '@/libs/validations/budget';
-import { postBudget, putBudget } from '@/libs/data-access/api/budget';
-import { PrimaryButton } from '@/libs/ui/button/PrimaryButton';
-import { FormBudgetValue } from './type';
+} from "@chakra-ui/react";
+import { FormikProps, useFormik } from "formik";
+import React from "react";
+import { AddBudgetValidationSchema } from "@/libs/validations/budget";
+import { postBudget, putBudget } from "@/libs/data-access/api/budget";
+import { PrimaryButton } from "@/libs/ui/button/PrimaryButton";
+import { FormBudgetValue } from "./type";
 
 type ModalFormBudgetProps = {
 	formik: FormikProps<FormBudgetValue>;
@@ -52,7 +52,7 @@ const ModalFormBudget = ({
 			<ModalOverlay backdropFilter="blur(3px)" />
 			<ModalContent
 				style={{
-					position: 'absolute',
+					position: "absolute",
 					bottom: 0,
 					paddingBottom: 20,
 					margin: 0,
@@ -167,7 +167,7 @@ export function ModalAddBudget({
 }: ModalAddBudgetProps) {
 	const formik = useFormik<FormBudgetValue>({
 		initialValues: {
-			name: '',
+			name: "",
 			amount: undefined,
 		},
 		onSubmit: async ({ name, amount }, { setErrors, resetForm }) => {

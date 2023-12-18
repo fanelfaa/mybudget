@@ -1,5 +1,5 @@
-import { Navigate, Outlet, useLocation } from 'react-router-dom';
-import useAuthStore from '@/libs/data-access/store/authStore';
+import { Navigate, Outlet, useLocation } from "react-router-dom";
+import useAuthStore from "@/libs/data-access/store/authStore";
 
 export const RequiredAuth = () => {
 	const isAuthenticated = useAuthStore((s) => s.isAuthenticated);

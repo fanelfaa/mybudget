@@ -1,3 +1,7 @@
+import { logout } from "@/libs/data-access/api/logout";
+import { getRooms } from "@/libs/data-access/api/room";
+import { AppBar } from "@/libs/ui/layout/AppBar";
+import { formatIdr } from "@/libs/utils/formatIdr";
 import {
 	Box,
 	Grid,
@@ -7,12 +11,8 @@ import {
 	useDisclosure,
 	useToast,
 } from "@chakra-ui/react";
-import { Link, useLoaderData, useRevalidator } from "react-router-dom";
 import { Suspense, lazy } from "react";
-import { AppBar } from "@/libs/ui/layout/AppBar";
-import { logout } from "@/libs/data-access/api/logout";
-import { getRooms } from "@/libs/data-access/api/room";
-import { formatIdr } from "@/libs/utils/formatIdr";
+import { Link, useLoaderData, useRevalidator } from "react-router-dom";
 
 const ModalAddRoom = lazy(() => import("./components/ModalAddRoom"));
 

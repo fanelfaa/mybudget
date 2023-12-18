@@ -10,33 +10,33 @@ const BudgetListPage = loadable(lazy(() => import("../pages/budget/List")));
 const BudgetDetailPage = loadable(lazy(() => import("../pages/budget/Detail")));
 
 export const publicRoutes: RouteObject[] = [
-  {
-    path: "/login",
-    element: <LoginPage />,
-  },
+	{
+		path: "/login",
+		element: <LoginPage />,
+	},
 ];
 
 export const privateRoutes: RouteObject[] = [
-  {
-    path: "/",
-    element: <Navigate to="/room" />,
-  },
-  {
-    element: <BaseLayout />,
-    children: [
-      {
-        path: "/room",
-        element: <RoomPage />,
-        loader: () => getRooms(),
-      },
-      {
-        path: "/room/:roomId/budget",
-        element: <BudgetListPage />,
-      },
-      {
-        path: "/room/:roomId/budget/:budgetId",
-        element: <BudgetDetailPage />,
-      },
-    ],
-  },
+	{
+		path: "/",
+		element: <Navigate to="/room" />,
+	},
+	{
+		element: <BaseLayout />,
+		children: [
+			{
+				path: "/room",
+				element: <RoomPage />,
+				loader: () => getRooms(),
+			},
+			{
+				path: "/room/:roomId/budget",
+				element: <BudgetListPage />,
+			},
+			{
+				path: "/room/:roomId/budget/:budgetId",
+				element: <BudgetDetailPage />,
+			},
+		],
+	},
 ];

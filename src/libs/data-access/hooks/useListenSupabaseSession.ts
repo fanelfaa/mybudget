@@ -1,6 +1,6 @@
-import { useEffect } from 'react';
-import { supabase } from '../supabase';
-import useAuthStore from '../store/authStore';
+import { useEffect } from "react";
+import { supabase } from "../supabase";
+import useAuthStore from "../store/authStore";
 
 export const useListenSupabaseSession = () => {
 	const setValues = useAuthStore((a) => a.setValues);

@@ -17,14 +17,14 @@ import {
 	AlertTitle,
 	Textarea,
 	UseDisclosureReturn,
-} from '@chakra-ui/react';
-import { FormikProps, useFormik } from 'formik';
-import React, { useState } from 'react';
-import { format } from 'date-fns';
-import { PrimaryButton } from '@/libs/ui/button/PrimaryButton';
-import { FormExpenseValue } from './type';
-import { postExpense, putExpense } from '@/libs/data-access/api/transaction';
-import { AddExpenseValidationSchema } from '@/libs/validations/transaction';
+} from "@chakra-ui/react";
+import { FormikProps, useFormik } from "formik";
+import React, { useState } from "react";
+import { format } from "date-fns";
+import { PrimaryButton } from "@/libs/ui/button/PrimaryButton";
+import { FormExpenseValue } from "./type";
+import { postExpense, putExpense } from "@/libs/data-access/api/transaction";
+import { AddExpenseValidationSchema } from "@/libs/validations/transaction";
 
 export type ModalFormExpenseProps = {
 	formik: FormikProps<FormExpenseValue>;
@@ -73,7 +73,7 @@ export function ModalFormExpense({
 			<ModalOverlay backdropFilter="blur(3px)" />
 			<ModalContent
 				style={{
-					position: 'absolute',
+					position: "absolute",
 					bottom: 0,
 					paddingBottom: 20,
 					margin: 0,
@@ -173,11 +173,11 @@ export function ModalAddExpense({
 	const formik = useFormik<FormExpenseValue>({
 		initialValues: {
 			amount: undefined,
-			date: format(new Date(), 'yyyy-MM-dd'),
-			note: '',
+			date: format(new Date(), "yyyy-MM-dd"),
+			note: "",
 		},
 		onSubmit: async ({ amount, date: inputDate, note }, { resetForm }) => {
-			const [year, month, date] = inputDate.split('-').map((it) => +it);
+			const [year, month, date] = inputDate.split("-").map((it) => +it);
 			return postExpense({
 				roomId,
 				budgetId,
@@ -234,7 +234,7 @@ export function ModalEditExpense({
 	const formik = useFormik<FormExpenseValue>({
 		initialValues,
 		onSubmit: async ({ amount, date: inputDate, note }, { resetForm }) => {
-			const [year, month, date] = inputDate.split('-').map((it) => +it);
+			const [year, month, date] = inputDate.split("-").map((it) => +it);
 			return putExpense({
 				id,
 				budgetId,

@@ -42,11 +42,11 @@ export interface Database {
 				};
 				Relationships: [
 					{
-						foreignKeyName: 'budgets_room_id_fkey';
-						columns: ['room_id'];
-						referencedRelation: 'rooms';
-						referencedColumns: ['id'];
-					}
+						foreignKeyName: "budgets_room_id_fkey";
+						columns: ["room_id"];
+						referencedRelation: "rooms";
+						referencedColumns: ["id"];
+					},
 				];
 			};
 			categories: {
@@ -73,11 +73,11 @@ export interface Database {
 				};
 				Relationships: [
 					{
-						foreignKeyName: 'categories_room_id_fkey';
-						columns: ['room_id'];
-						referencedRelation: 'rooms';
-						referencedColumns: ['id'];
-					}
+						foreignKeyName: "categories_room_id_fkey";
+						columns: ["room_id"];
+						referencedRelation: "rooms";
+						referencedColumns: ["id"];
+					},
 				];
 			};
 			rooms: {
@@ -140,23 +140,23 @@ export interface Database {
 				};
 				Relationships: [
 					{
-						foreignKeyName: 'transactions_budget_id_fkey';
-						columns: ['budget_id'];
-						referencedRelation: 'budgets';
-						referencedColumns: ['id'];
+						foreignKeyName: "transactions_budget_id_fkey";
+						columns: ["budget_id"];
+						referencedRelation: "budgets";
+						referencedColumns: ["id"];
 					},
 					{
-						foreignKeyName: 'transactions_category_id_fkey';
-						columns: ['category_id'];
-						referencedRelation: 'categories';
-						referencedColumns: ['id'];
+						foreignKeyName: "transactions_category_id_fkey";
+						columns: ["category_id"];
+						referencedRelation: "categories";
+						referencedColumns: ["id"];
 					},
 					{
-						foreignKeyName: 'transactions_room_id_fkey';
-						columns: ['room_id'];
-						referencedRelation: 'rooms';
-						referencedColumns: ['id'];
-					}
+						foreignKeyName: "transactions_room_id_fkey";
+						columns: ["room_id"];
+						referencedRelation: "rooms";
+						referencedColumns: ["id"];
+					},
 				];
 			};
 			user_room: {
@@ -180,17 +180,17 @@ export interface Database {
 				};
 				Relationships: [
 					{
-						foreignKeyName: 'user_room_room_id_fkey';
-						columns: ['room_id'];
-						referencedRelation: 'rooms';
-						referencedColumns: ['id'];
+						foreignKeyName: "user_room_room_id_fkey";
+						columns: ["room_id"];
+						referencedRelation: "rooms";
+						referencedColumns: ["id"];
 					},
 					{
-						foreignKeyName: 'user_room_user_id_fkey';
-						columns: ['user_id'];
-						referencedRelation: 'users';
-						referencedColumns: ['id'];
-					}
+						foreignKeyName: "user_room_user_id_fkey";
+						columns: ["user_id"];
+						referencedRelation: "users";
+						referencedColumns: ["id"];
+					},
 				];
 			};
 		};

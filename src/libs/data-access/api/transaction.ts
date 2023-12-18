@@ -1,5 +1,5 @@
-import { supabase } from '../supabase';
-import { putTotalExpenseBudget } from './budget';
+import { supabase } from "../supabase";
+import { putTotalExpenseBudget } from "./budget";
 
 export type GetTransactionsParams = {
 	budgetId: string;
@@ -7,9 +7,9 @@ export type GetTransactionsParams = {
 
 export const getTransactions = async (params: GetTransactionsParams) =>
 	supabase
-		.from('transactions')
-		.select('*, categories(name)')
-		.eq('budget_id', params.budgetId)
+		.from("transactions")
+		.select("*, categories(name)")
+		.eq("budget_id", params.budgetId)
 		.then((res) => {
 			if (res.error) throw new Error(res.error.message);
 			return res.data;
@@ -32,7 +32,7 @@ export const postExpense = async ({
 	...otherParams
 }: PostExpenseParams) =>
 	supabase
-		.from('transactions')
+		.from("transactions")
 		.insert({
 			room_id: roomId,
 			budget_id: budgetId,
@@ -41,7 +41,7 @@ export const postExpense = async ({
 		.then(async () => {
 			return putTotalExpenseBudget(
 				budgetId,
-				currentBudgetExpense + otherParams.amount
+				currentBudgetExpense + otherParams.amount,
 			);
 		});
 
@@ -53,17 +53,17 @@ export type DeleteTransactionParams = {
 };
 export const deleteTransaction = async (params: DeleteTransactionParams) =>
 	supabase
-		.from('transactions')
+		.from("transactions")
 		.delete()
-		.eq('id', params.id)
+		.eq("id", params.id)
 		.then(async () => {
 			return putTotalExpenseBudget(
 				params.budgetId,
-				params.currentBudgetExpense - params.amountDeleted
+				params.currentBudgetExpense - params.amountDeleted,
 			);
 		});
 
-export type PutExpenseParams = Omit<PostExpenseParams, 'roomId'> & {
+export type PutExpenseParams = Omit<PostExpenseParams, "roomId"> & {
 	id: string;
 	prevAmount: number;
 };
@@ -76,12 +76,12 @@ export const putExpense = async ({
 	...otherParams
 }: PutExpenseParams) =>
 	supabase
-		.from('transactions')
+		.from("transactions")
 		.update(otherParams)
-		.eq('id', id)
+		.eq("id", id)
 		.then(async () => {
 			return putTotalExpenseBudget(
 				budgetId,
-				currentBudgetExpense - prevAmount + otherParams.amount
+				currentBudgetExpense - prevAmount + otherParams.amount,
 			);
 		});

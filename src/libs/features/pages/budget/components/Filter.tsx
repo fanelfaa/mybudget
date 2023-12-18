@@ -1,5 +1,5 @@
-import { Box, Grid } from '@chakra-ui/react';
-import { Search, SearchProps } from './Search';
+import { Box, Grid } from "@chakra-ui/react";
+import { Search, SearchProps } from "./Search";
 
 export type FilterProps = SearchProps;
 

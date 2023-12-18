@@ -1,7 +1,7 @@
-import { UseDisclosureReturn } from "@chakra-ui/react";
-import { useFormik } from "formik";
 import { postRoom } from "@/libs/data-access/api/room";
 import { AddRoomValidationSchema } from "@/libs/validations/room";
+import { UseDisclosureReturn } from "@chakra-ui/react";
+import { useFormik } from "formik";
 import { FormRoomValue } from "../type";
 import { ModalFormRoom } from "./ModalRoom";
 
@@ -39,7 +39,7 @@ export function ModalAddRoom({
 		<ModalFormRoom
 			disclosureProps={disclosureProps}
 			formik={formik}
-			modalTitle={`Tambah Periode`}
+			modalTitle={"Tambah Periode"}
 		/>
 	);
 }

@@ -1,13 +1,13 @@
-import { useQuery } from 'react-query';
-import { getBudget } from '../../api/budget';
+import { useQuery } from "react-query";
+import { getBudget } from "../../api/budget";
 
 export const useGetBudget = (id: string, options: { enabled?: boolean }) => {
-	const key = ['get', 'budget', id];
+	const key = ["get", "budget", id];
 	return useQuery({
 		queryKey: key,
 
 		queryFn: () => getBudget(id),
 		...options,
-		staleTime: 60000
+		staleTime: 60000,
 	});
 };

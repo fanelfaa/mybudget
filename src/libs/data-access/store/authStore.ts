@@ -1,6 +1,6 @@
-import { Session } from '@supabase/supabase-js';
-import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
+import { Session } from "@supabase/supabase-js";
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 type AuthState = {
 	session: Session | null;
@@ -19,12 +19,12 @@ export const useAuthStore = create<AuthState & AuthAction>()(
 			setValues: (values) => set(() => values),
 		}),
 		{
-			name: 'user-auth',
+			name: "user-auth",
 			partialize: (state) => ({
 				isAuthenticated: state.isAuthenticated,
 			}),
-		}
-	)
+		},
+	),
 );
 
 export default useAuthStore;
