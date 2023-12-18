@@ -6,42 +6,42 @@ import { FormRoomValue } from "../type";
 import { ModalFormRoom } from "./ModalRoom";
 
 export type ModalAddRoomProps = {
-	onSuccess: () => void;
+   onSuccess: () => void;
 
-	disclosureProps: UseDisclosureReturn;
+   disclosureProps: UseDisclosureReturn;
 };
 
 export function ModalAddRoom({
-	onSuccess,
-	disclosureProps,
+   onSuccess,
+   disclosureProps,
 }: ModalAddRoomProps) {
-	const formik = useFormik<FormRoomValue>({
-		initialValues: {
-			name: "",
-		},
-		onSubmit: async ({ name }, { setErrors, resetForm }) => {
-			return postRoom({
-				name,
-			}).then((res) => {
-				if (res.error) {
-					setErrors({ name: res.error.message });
-					return;
-				}
-				onSuccess();
-				disclosureProps.onClose();
-				resetForm();
-			});
-		},
-		validationSchema: AddRoomValidationSchema,
-	});
+   const formik = useFormik<FormRoomValue>({
+      initialValues: {
+         name: "",
+      },
+      onSubmit: async ({ name }, { setErrors, resetForm }) => {
+         return postRoom({
+            name,
+         }).then((res) => {
+            if (res.error) {
+               setErrors({ name: res.error.message });
+               return;
+            }
+            onSuccess();
+            disclosureProps.onClose();
+            resetForm();
+         });
+      },
+      validationSchema: AddRoomValidationSchema,
+   });
 
-	return (
-		<ModalFormRoom
-			disclosureProps={disclosureProps}
-			formik={formik}
-			modalTitle={"Tambah Periode"}
-		/>
-	);
+   return (
+      <ModalFormRoom
+         disclosureProps={disclosureProps}
+         formik={formik}
+         modalTitle={"Tambah Periode"}
+      />
+   );
 }
 
 export default ModalAddRoom;

@@ -3,11 +3,11 @@ import { RequiredAuth } from "./RequiredAuth";
 import { privateRoutes, publicRoutes } from "./routes";
 
 const appRoutes = createBrowserRouter([
-	...publicRoutes,
-	{
-		element: <RequiredAuth />,
-		children: [...privateRoutes],
-	},
+   ...publicRoutes,
+   {
+      element: <RequiredAuth />,
+      children: [...privateRoutes],
+   },
 ]);
 
 export const AppRoutes = () => <RouterProvider router={appRoutes} />;

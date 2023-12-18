@@ -2,18 +2,18 @@ import { useQuery } from "react-query";
 import { GetTransactionsParams, getTransactions } from "../../api/transaction";
 
 export type ReturnUseGetTransactions = Awaited<
-	ReturnType<typeof getTransactions>
+   ReturnType<typeof getTransactions>
 >;
 
 export const useGetTransactions = (
-	params: GetTransactionsParams,
-	options: { enabled?: boolean },
+   params: GetTransactionsParams,
+   options: { enabled?: boolean },
 ) => {
-	const key = ["get", "transactions", params];
-	return useQuery({
-		queryKey: key,
-		queryFn: () => getTransactions(params),
-		...options,
-		staleTime: 60000,
-	});
+   const key = ["get", "transactions", params];
+   return useQuery({
+      queryKey: key,
+      queryFn: () => getTransactions(params),
+      ...options,
+      staleTime: 60000,
+   });
 };
