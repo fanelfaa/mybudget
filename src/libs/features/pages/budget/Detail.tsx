@@ -1,32 +1,32 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
-import {
-	Flex,
-	VStack,
-	Box,
-	Text,
-	useToast,
-	useDisclosure,
-	Spinner,
-} from "@chakra-ui/react";
-import { useLocation, useNavigate, useParams } from "react-router-dom";
-import { useCallback, useMemo, useState } from "react";
-import format from "date-fns/format";
-import { FiRefreshCw } from "react-icons/fi";
+import { putBudget } from "@/libs/data-access/api/budget";
 import { useGetBudget } from "@/libs/data-access/hooks/query/useGetBudget";
-import { formatIdr } from "@/libs/utils/formatIdr";
 import {
 	ReturnUseGetTransactions,
 	useGetTransactions,
 } from "@/libs/data-access/hooks/query/useGetTransactions";
-import { TransactionsProgress } from "./components/Progress";
-import { AppBar } from "@/libs/ui/layout/AppBar";
-import { ModalAddExpense, ModalEditExpense } from "./components/ModalExpense";
-import { FormExpenseValue } from "./components/type";
-import { PrimaryButton } from "@/libs/ui/button/PrimaryButton";
-import { Search } from "./components/Search";
-import { GroupExpenses } from "./components/GroupExpenses";
 import { env } from "@/libs/env";
-import { putBudget } from "@/libs/data-access/api/budget";
+import { PrimaryButton } from "@/libs/ui/button/PrimaryButton";
+import { AppBar } from "@/libs/ui/layout/AppBar";
+import { formatIdr } from "@/libs/utils/formatIdr";
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+import {
+	Box,
+	Flex,
+	Spinner,
+	Text,
+	VStack,
+	useDisclosure,
+	useToast,
+} from "@chakra-ui/react";
+import format from "date-fns/format";
+import { useCallback, useMemo, useState } from "react";
+import { FiRefreshCw } from "react-icons/fi";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { GroupExpenses } from "./components/GroupExpenses";
+import { ModalAddExpense, ModalEditExpense } from "./components/ModalExpense";
+import { TransactionsProgress } from "./components/Progress";
+import { Search } from "./components/Search";
+import { FormExpenseValue } from "./components/type";
 
 export default function BudgetDetailPage() {
 	const [dataToEdit, setDataToEdit] = useState<
@@ -84,7 +84,7 @@ export default function BudgetDetailPage() {
 			);
 		}
 
-		filteredData.forEach((t) => {
+		for (const t of filteredData) {
 			const date = t.date + t.month * 100;
 			const prevGroup = group.get(date);
 			if (!prevGroup) {
@@ -92,7 +92,7 @@ export default function BudgetDetailPage() {
 			} else {
 				group.set(date, [...prevGroup, t]);
 			}
-		});
+		}
 		return group;
 	}, [transactionsQuery, searchQuery]);
 
