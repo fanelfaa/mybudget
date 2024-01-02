@@ -1,16 +1,16 @@
-import { Box, Grid } from '@chakra-ui/react';
-import { Search, SearchProps } from './Search';
+import { Box, Grid } from "@chakra-ui/react";
+import { Search, SearchProps } from "./Search";
 
 export type FilterProps = SearchProps;
 
 export const Filter = ({ onSearch }: SearchProps) => {
-	// const [show, setShow] = useState(false);
+   // const [show, setShow] = useState(false);
 
-	return (
-		<Box>
-			<Grid templateColumns="1fr auto" gap="2">
-				<Search onSearch={onSearch} />
-				{/* <IconButton
+   return (
+      <Box>
+         <Grid templateColumns="1fr auto" gap="2">
+            <Search onSearch={onSearch} />
+            {/* <IconButton
 					icon={<FiFilter />}
 					aria-label="Previous Month"
 					onClick={() => setShow((prev) => !prev)}
@@ -18,8 +18,8 @@ export const Filter = ({ onSearch }: SearchProps) => {
 					colorScheme="gray"
 					size="sm"
 				/> */}
-			</Grid>
-			{/* <Box
+         </Grid>
+         {/* <Box
 				position="relative"
 				h={show ? '12' : '0'}
 				transition="all .2s ease-in-out"
@@ -36,6 +36,6 @@ export const Filter = ({ onSearch }: SearchProps) => {
 					<FilterMonthYear />
 				</Box>
 			</Box> */}
-		</Box>
-	);
+      </Box>
+   );
 };
