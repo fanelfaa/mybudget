@@ -18,6 +18,7 @@ import {
    useToast,
 } from "@chakra-ui/react";
 import format from "date-fns/format";
+import getUnixTime from "date-fns/getUnixTime";
 import { useCallback, useMemo, useState } from "react";
 import { FiRefreshCw } from "react-icons/fi";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
@@ -26,6 +27,10 @@ import { ModalAddExpense, ModalEditExpense } from "./components/ModalExpense";
 import { TransactionsProgress } from "./components/Progress";
 import { Search } from "./components/Search";
 import { FormExpenseValue } from "./components/type";
+
+const getSortableDate = (date: number, month: number, year: number) => {
+   return getUnixTime(new Date(year, month, date));
+};
 
 export default function BudgetDetailPage() {
    const [dataToEdit, setDataToEdit] = useState<
@@ -64,19 +69,20 @@ export default function BudgetDetailPage() {
       [transactionsQuery.data],
    );
 
-   const groupExpenseDaily = useMemo(() => {
-      if (!transactionsQuery.data) return null;
-      const group = new Map<number, ReturnUseGetTransactions>();
+   const sortedData = useMemo(() => {
+      if (!transactionsQuery.data) return [];
 
-      const getSortableDate = (date: number, month: number, year: number) => {
-         return year + month * 100 + date;
-      };
-
-      let filteredData = transactionsQuery.data.sort(
+      return transactionsQuery.data.sort(
          (a, b) =>
             getSortableDate(b.date, b.month, b.year) -
             getSortableDate(a.date, a.month, a.year),
       );
+   }, [transactionsQuery.data]);
+
+   const groupExpenseDaily = useMemo(() => {
+      const group = new Map<number, ReturnUseGetTransactions>();
+
+      let filteredData = [...sortedData];
 
       if (searchQuery.length > 0) {
          filteredData = [...filteredData].filter((it) =>
@@ -85,7 +91,7 @@ export default function BudgetDetailPage() {
       }
 
       for (const t of filteredData) {
-         const date = t.date + t.month * 100;
+         const date = getSortableDate(t.date, t.month, t.year);
          const prevGroup = group.get(date);
          if (!prevGroup) {
             group.set(date, [t]);
@@ -94,7 +100,7 @@ export default function BudgetDetailPage() {
          }
       }
       return group;
-   }, [transactionsQuery, searchQuery]);
+   }, [sortedData, searchQuery]);
 
    const onSuccessDelete = () => {
       refetchAll();
