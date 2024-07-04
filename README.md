@@ -1,4 +1,4 @@
-# Search Indonesian Post Code
+# Expense Tracker with Budget 
 Welcome to this simple project, guys
 
 ## Project Stack
@@ -6,9 +6,9 @@ Welcome to this simple project, guys
 React
 Typescript
 Chakra UI
-react-select
 React Router
-Alova (alternative to axios, but much simpler)
+Supabase
+Biome
 ```
 
 ## How to install
@@ -24,13 +24,8 @@ pnpm run dev
 
 > Note other command, see in `package.json`
 
-## Credential (Fake)
-```
-email: ironman@avengers.com
-pass: spiderman
-```
+## Credential
+Email me at fandi.ilham.bb@gmail.com fr the credentials
 
-## Hosting
-```
-https://search-post-code.vercel.app/
-```
+> pst...! you can install this app to your device since it's PWA ready
+
